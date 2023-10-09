@@ -1,8 +1,15 @@
 const express = require("express");
+
+const {
+  getExpenses,
+  createExpense,
+  updateExpense,
+  deleteExpense,
+} = require("../controllers/expenses");
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.status(200).json({ success: true, msg: "Get expenses" });
-});
+router.route("/").get(getExpenses).post(createExpense);
+router.route("/:id").put(updateExpense).delete(deleteExpense);
 
 module.exports = router;
