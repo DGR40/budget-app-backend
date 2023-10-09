@@ -1,0 +1,12 @@
+{
+  "name": "budget-app-backend",
+  "version": "1.0.0",
+  "description": "budget-app-backend api",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server",
+    "dev": "nodemon server"
+  },
+  "author": "Danny Rusk",
+  "license": "ISC"
+}
