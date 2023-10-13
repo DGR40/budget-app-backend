@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "5d713995b721c3bb38c1f5d0",
+    "user": "5d7a514b5d2c12c7449be045",
+    "title": "Drinks",
+    "amount": 50,
+    "address": "233 Bay State Rd Boston MA 02215",
+    "category": "Food and Drink",
+    "date": "@{currentDate}"
+  },
+  {
+    "_id": "5d713995b721c3bb38c1f5d1",
+    "user": "5d7a514b5d2c12c7449be045",
+    "title": "New Rug",
+    "amount": 100,
+    "address": "20 Hudson Banks, Marlboro NY 12542",
+    "category": "Shopping",
+    "date": "@{currentDate}"
+  }
+]
