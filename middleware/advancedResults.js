@@ -1,3 +1,5 @@
+const Expense = require("../models/Expense");
+
 const advancedResults = (model) => async (req, res, next) => {
   let query;
 
@@ -22,8 +24,8 @@ const advancedResults = (model) => async (req, res, next) => {
   // Finding resource
   query = model.find(JSON.parse(queryStr));
 
-  // Filter for just the user's resource (unless admin)
-  if (req.user.role !== "admin") {
+  // If request for expenses
+  if (model == Expense && req.user.role !== "admin") {
     query.find({ user: req.user.id });
   }
 

@@ -12,8 +12,8 @@ const Expense = require("../models/Expense");
 
 const router = express.Router();
 
+// Middleware
 const { protect, authorize } = require("../middleware/auth");
-
 const advancedResults = require("../middleware/advancedResults");
 
 router.route("/radius/:zipcode/:distance").get(protect, getExpenseInRadius);

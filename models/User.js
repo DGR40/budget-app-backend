@@ -31,6 +31,9 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  firstLogIn: {
+    type: Boolean,
+  },
 });
 
 // Encrypt password using bcrypt
