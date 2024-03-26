@@ -1,0 +1,21 @@
+.mobile-category-filter {
+  width: 100%;
+  text-align: center;
+  background-color: #2e2e2e;
+  border-color: white;
+  color: white;
+  padding: 1rem;
+  font-weight: bold;
+  font-size: 1em;
+  border-right: 2px solid #a892ee;
+  border-left: 2px solid #a892ee;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .mobile-category-filter {
+    display: flex;
+  }
+}

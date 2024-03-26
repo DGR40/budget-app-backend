@@ -1,0 +1,26 @@
+.bubble {
+  width: auto;
+  color: white;
+  margin: 0;
+  background-color: #40005d;
+  display: flex;
+  align-items: center;
+  padding: 1rem 0.75rem;
+  font: inherit;
+  border: 2px solid #a892ee;
+  border-radius: 15px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.bubble:hover,
+.bubble:active {
+  background-color: #a892ee;
+  cursor: pointer;
+  color: black;
+}
+
+.selected {
+  background-color: #a892ee;
+  color: black;
+  border: 2px solid white;
+}

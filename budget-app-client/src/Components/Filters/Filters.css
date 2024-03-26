@@ -1,0 +1,40 @@
+.filter {
+  background-color: rgb(31, 31, 31);
+  border: 2px solid #a892ee;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom: none;
+}
+
+.time-filter-section {
+  padding: 0.5rem 0rem;
+  border-top-left-radius: 12px;
+}
+
+.filter-button {
+  font: inherit;
+  padding: 0.5rem 0.5rem;
+  font-weight: bold;
+  border-radius: 15px;
+  background-color: #2a2a2a;
+  color: white;
+  margin-right: 1rem;
+  cursor: pointer;
+  border: 1px solid grey;
+}
+
+@media only screen and (max-width: 768px) {
+  .filter-button {
+    padding: 0.2rem;
+    font-size: 0.75em;
+  }
+
+  .filter p {
+    font-size: 0.75em;
+    margin-top: 0px;
+  }
+}
+
+.filter-button:hover {
+  background-color: #3b3b3b;
+}

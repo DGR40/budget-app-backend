@@ -1,0 +1,70 @@
+.expenses-filter {
+  color: white;
+}
+
+#expenses-filter__monthly {
+  border-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.expenses-filter__control {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.expenses-filter label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  width: 20%;
+}
+
+.expenses-filter select {
+  font: inherit;
+  padding: 0.5rem 0rem;
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.time-filter {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.time-filter p {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.time-filter__control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .time-filter p {
+    display: none;
+  }
+
+  .time-filter__control_left {
+    margin-left: 1rem;
+  }
+}
+
+.time-filter__control_left {
+  display: flex;
+  align-items: baseline;
+}
+
+.time-filter__control_right {
+  display: flex;
+  margin-right: 1rem;
+}

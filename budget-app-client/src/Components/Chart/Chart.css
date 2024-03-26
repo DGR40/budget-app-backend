@@ -1,0 +1,22 @@
+.chart {
+  padding: 1rem;
+  border-radius: 0px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  height: 15rem;
+  border-right: 2px solid #a892ee;
+  border-left: 2px solid #a892ee;
+  color: white;
+  background-color: #2e2e2e;
+}
+
+.selected {
+  background-color: red;
+}
+
+@media (max-width: 800px) {
+  .chart {
+    display: none;
+  }
+}

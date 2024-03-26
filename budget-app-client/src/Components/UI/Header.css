@@ -1,0 +1,36 @@
+.banner {
+  font: inherit;
+  text-align: center;
+  justify-content: space-between;
+  display: flex;
+  color: white;
+  margin: none;
+  background-color: #40005d;
+  padding: 1rem;
+  font-weight: bold;
+  border-bottom: 1px solid white;
+}
+
+.banner__settings {
+  color: white;
+  text-decoration: none;
+}
+
+.banner__settings:hover {
+  color: #a892ee;
+  cursor: pointer;
+}
+
+.banner__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 33%;
+}
+
+.banner__text {
+  margin: none;
+  font-size: 3rem;
+}

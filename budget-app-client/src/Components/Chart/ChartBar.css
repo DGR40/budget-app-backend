@@ -1,0 +1,48 @@
+.chart-bar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-bar__inner {
+  width: 2rem;
+  height: 100%;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: #c3b4f3;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chart-bar__fill {
+  background-color: #4826b9;
+  width: 100%;
+  opacity: 75%;
+  transition: all 0.3s ease-out;
+  border-top: 3px solid white;
+}
+
+.selectedBar {
+  opacity: 100%;
+}
+
+.chart-bar__label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.chart-bar__max_label {
+  font-size: 1rem;
+}
+
+.red {
+  background-color: red;
+}
+
+.purple {
+  background-color: #4826b9;
+}

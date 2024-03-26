@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "build": "npm install && npm install --prefix budget-app-client && npm run build --prefix budget-app-client"
   },
   "author": "Danny Rusk",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "@babel/plugin-proposal-private-property-in-object":"7.21.11"
   }
 }

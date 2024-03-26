@@ -1,0 +1,30 @@
+.categories {
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  min-width: 0;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  border-left: 2px solid #a892ee;
+  border-right: 2px solid #a892ee;
+  border-bottom: none;
+  border-radius: 0px;
+  padding: 0.5rem;
+}
+
+@media only screen and (max-width: 800px) {
+  .categories {
+    flex-wrap: wrap;
+    justify-content: center;
+    display: none;
+  }
+}
+
+.category-bar__label {
+  color: white;
+}
+
+.selected {
+  color: black;
+}

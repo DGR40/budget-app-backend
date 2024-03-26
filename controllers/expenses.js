@@ -5,7 +5,7 @@ const geocoder = require("../utils/geocoder");
 
 // @desc     Get all expenses
 // @route    GET /api/v1/expenses
-// @access   Public
+// @access   Private
 exports.getExpenses = asyncHandler(async (req, res, next) => {
   res.status(200).json(res.advancedResults);
 });
