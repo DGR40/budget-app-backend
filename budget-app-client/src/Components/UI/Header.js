@@ -1,7 +1,17 @@
 import "./Header.css";
 import { Link } from "react-router-dom";
+import authStore from "../../Store/authStore";
+import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
+  const store = authStore();
+  const navigate = useNavigate();
+
+  function logoutHandler() {
+    store.logout();
+    navigate("/login");
+  }
+
   return (
     <div className="banner">
       <div className="banner__section"></div>
@@ -9,9 +19,14 @@ const Header = (props) => {
         <div className="banner__text">BudgeMe</div>
       </div>
       <div className="banner__section">
-        <Link to="/settings" class="banner__settings">
-          Settings
-        </Link>
+        {store.loggedIn == true && (
+          <>
+            <Link to="/settings" className="banner__settings">
+              Settings
+            </Link>
+            <button onClick={logoutHandler}>Logout</button>
+          </>
+        )}
       </div>
     </div>
   );

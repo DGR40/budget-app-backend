@@ -4,6 +4,7 @@ import { useHistory, useNavigate, Link } from "react-router-dom";
 import "./LoginForm.css";
 import { getAuthToken } from "../Utils/auth";
 import Cookies from "js-cookie";
+import authStore from "../Store/authStore";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
@@ -12,12 +13,7 @@ function LoginForm() {
   const token = getAuthToken();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token) {
-      console.log("Token found");
-      navigate("/expenses");
-    }
-  }, [token, navigate]);
+  const store = authStore();
 
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -44,51 +40,10 @@ function LoginForm() {
     formIsValid = true;
   }
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-
-    console.log("test");
-
-    setIsLoading(true);
-    let url = "http://localhost:3001/api/v1/auth/login";
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
-        email: emailValue,
-        password: passwordValue,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        setIsLoading(false);
-        if (res.ok) {
-          return res.json();
-        } else {
-          return res.json().then((data) => {
-            let errorMessage = "Authentication failed!";
-            // if (data && data.error && data.error.message) {
-            //   errorMessage = data.error.message;
-            // }
-
-            throw new Error(errorMessage);
-          });
-        }
-      })
-      .then((data) => {
-        const token = data.token;
-        localStorage.setItem("token", token);
-        Cookies.set("token", token);
-        resetEmail();
-        resetPassword();
-        navigate("/expenses");
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-    console.log("Submitted!");
-    console.log(passwordValue, emailValue);
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    await store.login();
+    navigate("/expenses");
   };
 
   const passwordClasses = passwordHasError
@@ -97,7 +52,7 @@ function LoginForm() {
   const emailClasses = emailHasError ? "form-control invalid" : "form-control";
 
   return (
-    <form onSubmit={submitHandler} class="expenses login">
+    <form onSubmit={submitHandler} className="expenses login">
       <div className="login-title">Welcome back!</div>
       <div className="login-group">
         <div className={emailClasses}>
@@ -105,8 +60,12 @@ function LoginForm() {
           <input
             type="text"
             id="email"
+            name="email"
             value={emailValue}
-            onChange={emailChangeHandler}
+            onChange={(e) => {
+              emailChangeHandler(e);
+              store.updateLoginForm(e);
+            }}
             onBlur={emailBlurHandler}
           />
         </div>
@@ -118,8 +77,12 @@ function LoginForm() {
           <input
             type="text"
             id="password"
+            name="password"
             value={passwordValue}
-            onChange={passwordChangeHandler}
+            onChange={(e) => {
+              passwordChangeHandler(e);
+              store.updateLoginForm(e);
+            }}
             onBlur={passwordBlurHandler}
           />
         </div>
@@ -133,7 +96,7 @@ function LoginForm() {
           >
             {isLoading ? "Logging in..." : "Log In"}
           </button>
-          <Link to="/signup" class="signup-text">
+          <Link to="/signup" className="signup-text">
             Don't have an account... sign up!
           </Link>
         </div>

@@ -11,8 +11,20 @@ import MobileCategoryFilter from "../Filters/MobileCategoryFilter";
 import AuthContext from "../../Store/auth-context";
 import { getAuthToken } from "../../Utils/auth";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import expensesStore from "../../Store/expensesStore";
+import authStore from "../../Store/authStore";
 
-function Expenses(props) {
+function Expenses({ props }) {
+  const eStore = expensesStore();
+  const loggedIn = authStore().loggedIn;
+
+  useEffect(() => {
+    // fetch expenses
+    eStore.fetchExpenses();
+    console.log("finished fetching expenses", eStore.expenses);
+  }, []);
+
   const [filteredYear, setFilteredYear] = useState(
     new Date().getFullYear().toString()
   );
@@ -30,36 +42,8 @@ function Expenses(props) {
   const [seeExpenses, setSeeExpenses] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const navigate = useNavigate();
-
   const [expenses, setExpenses] = useState([]);
   const [expensesLoading, setExpensesLoading] = useState(false);
-
-  useEffect(() => {
-    setExpensesLoading(true);
-    console.log("fetching expenses");
-    const token = getAuthToken();
-
-    console.log("Token" + token);
-
-    const loadExpenses = async () => {
-      const response = await fetch("http://localhost:3001/api/v1/expenses", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      if (response.ok) {
-        const expenses = await response.json();
-        setExpenses(expenses.data);
-        setExpensesLoading(false);
-        console.log(expenses);
-      } else {
-        console.log("that didn't work!");
-        navigate("/login");
-      }
-    };
-    loadExpenses();
-  }, []);
 
   const budgetDict = {
     "Food and Drink": 500,
@@ -70,6 +54,10 @@ function Expenses(props) {
     Transportation: 50,
     All: 1450,
   };
+
+  let filteredExpenses = [];
+  let filteredExpensesOfCategory = [];
+  let filteredExpensesOfText = [];
 
   if (yearMode) {
     for (let key in budgetDict) {
@@ -92,7 +80,6 @@ function Expenses(props) {
 
   function addExpenseHandler(expense) {
     setSeeExpenses(true);
-    props.onAddExpense(expense);
     setFilteredCategory("All");
   }
 
@@ -139,54 +126,58 @@ function Expenses(props) {
     setSeeExpenses(true);
   }
 
-  // if in month mode
-  let filteredExpenses = expenses.filter(
-    (expense) =>
-      new Date(expense.date).getFullYear().toString() ===
-        filteredYearWithMonth &&
-      new Date(expense.date).toLocaleString("en-us", { month: "long" }) ==
-        filteredMonth
-  );
-
-  console.log("after month filter", filteredExpenses);
-
-  // if in year mode
-  if (yearMode) {
-    filteredExpenses = expenses.filter(
+  if (eStore.expenses) {
+    // if in month mode
+    filteredExpenses = eStore.expenses.filter(
       (expense) =>
-        new Date(expense.date).getFullYear().toString() === filteredYear
+        new Date(expense.date).getFullYear().toString() ===
+          filteredYearWithMonth &&
+        new Date(expense.date).toLocaleString("en-us", { month: "long" }) ==
+          filteredMonth
     );
-  }
 
-  let filteredExpensesOfCategory = filteredExpenses;
-  // if category filter applied
-  if (filteredCategory !== "All") {
-    filteredExpensesOfCategory = filteredExpenses.filter((expense) => {
-      return filteredCategory === expense.category;
+    console.log("after month filter", filteredExpenses);
+
+    // if in year mode
+    if (yearMode) {
+      console.log("year mode yo!");
+      filteredExpenses = eStore.expenses.filter(
+        (expense) =>
+          new Date(expense.date).getFullYear().toString() === filteredYear
+      );
+    }
+
+    console.log("after the year filter", filteredExpenses);
+
+    filteredExpensesOfCategory = filteredExpenses;
+    // if category filter applied
+    if (filteredCategory !== "All") {
+      filteredExpensesOfCategory = filteredExpenses.filter((expense) => {
+        return filteredCategory === expense.category;
+      });
+    }
+
+    if (mobileCategoryFilter !== "All") {
+      filteredExpensesOfCategory = filteredExpenses.filter((expense) => {
+        return mobileCategoryFilter === expense.category;
+      });
+    }
+
+    // lastly, order the filtered expenses by date
+    filteredExpensesOfCategory.sort(function (a, b) {
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(b.date) - new Date(a.date);
     });
+
+    filteredExpensesOfText = filteredExpensesOfCategory;
+    // for text search
+    if (searchTerm !== "" && filteredExpensesOfText) {
+      filteredExpensesOfText = filteredExpensesOfCategory.filter((expense) =>
+        expense.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
   }
-
-  if (mobileCategoryFilter !== "All") {
-    filteredExpensesOfCategory = filteredExpenses.filter((expense) => {
-      return mobileCategoryFilter === expense.category;
-    });
-  }
-
-  // lastly, order the filtered expenses by date
-  filteredExpensesOfCategory.sort(function (a, b) {
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
-    return new Date(b.date) - new Date(a.date);
-  });
-
-  let filteredExpensesOfText = filteredExpensesOfCategory;
-  // for text search
-  if (searchTerm !== "" && filteredExpensesOfText) {
-    filteredExpensesOfText = filteredExpensesOfCategory.filter((expense) =>
-      expense.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
-
   // get ExpenseList
   function getExpenseList(seeExpenses, expenses) {
     if (seeExpenses) {

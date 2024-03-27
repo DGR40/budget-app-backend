@@ -4,6 +4,7 @@ const asyncHandler = require("../middleware/async");
 const sendEmail = require("../utils/sendEmail");
 const User = require("../models/User");
 const { findByIdAndUpdate } = require("../models/Expense");
+const { NONAME } = require("dns");
 
 // @desc     Register user
 // @route    GET /api/v1/auth/register
@@ -200,6 +201,7 @@ const sendTokenResponse = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    sameSite: "lax",
   };
 
   if (process.env.NODE_ENV === "production") {

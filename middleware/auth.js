@@ -7,16 +7,19 @@ const User = require("../models/User");
 exports.protect = asyncHandler(async (req, res, next) => {
   let token;
 
+  console.log(req.headers);
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
   }
-  // uncomment for production
-  // } else if (req.cookies.token) {
-  //   token = req.cookies.token;
-  // }
+
+  //uncomment for production
+  else if (req.cookies.token) {
+    token = req.cookies.token;
+  }
 
   // Make sure token exists
   if (!token) {
@@ -28,6 +31,12 @@ exports.protect = asyncHandler(async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     console.log(decoded);
+
+    // // Check token expiration
+    // if (Date.now() > decoded.exp)
+    //   return next(
+    //     new ErrorResponse("Not authorized to access this route", 401)
+    //   );
 
     // Make user available to any place protect middleware is used
     req.user = await User.findById(decoded.id);

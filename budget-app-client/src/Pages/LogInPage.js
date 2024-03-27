@@ -1,8 +1,18 @@
-import { json, redirect } from "react-router-dom";
+import { json, redirect, useNavigate, Navigate } from "react-router-dom";
 import LoginForm from "../Components/LoginForm.js";
 import Header from "../Components/UI/Header.js";
+import authStore from "../Store/authStore.js";
 
 function LogInPage() {
+  const store = authStore();
+  const navigate = useNavigate();
+
+  console.log(store.loggedIn);
+
+  if (store.loggedIn) {
+    return <Navigate to="/expenses" />;
+  }
+
   return (
     <div className="app-container">
       <Header></Header>

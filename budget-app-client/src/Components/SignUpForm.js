@@ -7,12 +7,15 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../Store/auth-context";
 import { getAuthToken } from "../Utils/auth";
 import Cookies from "js-cookie";
+import authStore from "../Store/authStore.js";
 
 const isNotEmptyIsLong = (value) => value.trim() !== "" && value.length >= 6;
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
 
 function SignUpForm() {
+  const store = authStore();
+
   const navigate = useNavigate();
   const goToExpenses = () => navigate("/expenses");
 
@@ -54,45 +57,8 @@ function SignUpForm() {
   }
 
   const submitHandler = async (event) => {
-    event.preventDefault();
-
-    console.log("test");
-
-    setIsLoading(true);
-    setSignupFailed(false);
-    let url = "http://localhost:3001/api/v1/auth/register";
-    const response = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
-        name: nameValue,
-        email: emailValue,
-        password: passwordValue,
-        
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setIsLoading(false);
-    if (!response.ok) {
-      let errorMessage = "Authentication failed!";
-      setSignupFailed(true);
-      resetEmail();
-    } else {
-      const data = await response.json();
-      console.log("DATA", data);
-      const token = data.token;
-      localStorage.setItem("token", token);
-      Cookies.set("token", token);
-      console.log("checking token after login", getAuthToken());
-
-      resetEmail();
-      resetPassword();
-      resetName();
-      console.log("Submitted!");
-      console.log(passwordValue, emailValue);
-      goToExpenses();
-    }
+    store.signup();
+    goToExpenses();
   };
 
   const passwordClasses = passwordHasError
@@ -111,8 +77,12 @@ function SignUpForm() {
             placeholder="Ex: John Doe"
             type="text"
             id="name"
+            name="name"
             value={nameValue}
-            onChange={nameChangeHandler}
+            onChange={(e) => {
+              nameChangeHandler(e);
+              store.updateSignupForm(e);
+            }}
             onBlur={nameBlurHandler}
           />
         </div>
@@ -123,8 +93,12 @@ function SignUpForm() {
             placeholder="Ex: john@email.com"
             type="text"
             id="email"
+            name="email"
             value={emailValue}
-            onChange={emailChangeHandler}
+            onChange={(e) => {
+              emailChangeHandler(e);
+              store.updateSignupForm(e);
+            }}
             onBlur={emailBlurHandler}
           />
         </div>
@@ -141,9 +115,13 @@ function SignUpForm() {
           <input
             type="text"
             id="password"
+            name="password"
             placeholder="at least six characters long"
             value={passwordValue}
-            onChange={passwordChangeHandler}
+            onChange={(e) => {
+              passwordChangeHandler(e);
+              store.updateSignupForm(e);
+            }}
             onBlur={passwordBlurHandler}
           />
         </div>
@@ -160,7 +138,7 @@ function SignUpForm() {
             {isLoading ? "Signing Up..." : "Sign Up"}
           </button>
 
-          <Link to="/login" class="signup-text">
+          <Link to="/login" className="signup-text">
             Already have an account? Sign in...
           </Link>
         </div>

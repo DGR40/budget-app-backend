@@ -55,7 +55,13 @@ app.use(limiter);
 app.use(hpp());
 
 // Enable CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    "Access-Control-Allow-Credentials": true,
+  })
+);
 
 // Mount routers
 app.use("/api/v1/expenses", expenses);
