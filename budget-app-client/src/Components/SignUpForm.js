@@ -19,8 +19,6 @@ function SignUpForm() {
   const navigate = useNavigate();
   const goToExpenses = () => navigate("/expenses");
 
-  console.log("hey there!!!!!!!!!!!");
-
   const [signupFailed, setSignupFailed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -56,8 +54,8 @@ function SignUpForm() {
     formIsValid = true;
   }
 
-  const submitHandler = async (event) => {
-    store.signup();
+  const submitHandler = async (e) => {
+    await store.signup(e);
     goToExpenses();
   };
 
@@ -68,7 +66,7 @@ function SignUpForm() {
   const nameClasses = nameHasError ? "form-control invalid" : "form-control";
 
   return (
-    <form onSubmit={submitHandler} class="expenses login">
+    <form onSubmit={submitHandler} className="expenses login">
       <div className="login-title">Sign Up Today!</div>
       <div className="login-group">
         <div className={nameClasses}>

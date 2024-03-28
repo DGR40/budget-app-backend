@@ -30,6 +30,7 @@ function ExpensesList(props) {
             amount={expense.amount}
             date={expense.date}
             category={expense.category}
+            expense={expense}
           ></ExpenseItem>
         ))}
       </ul>

@@ -3,7 +3,13 @@ import React, { useState } from "react";
 import expensesStore from "../../Store/expensesStore";
 import useInput from "../../Hooks/use-input";
 
-function ExpenseForm(props) {
+function ExpenseForm({
+  onSubmitCreateExpense,
+  onClearExpense,
+  onSubmitEditExpense,
+  mode,
+  eid,
+}) {
   const [titleValid, setTitleValid] = useState(true);
   const [amountValid, setAmountValid] = useState(true);
   const [categoryValid, setCategoryValid] = useState(true);
@@ -12,29 +18,34 @@ function ExpenseForm(props) {
 
   const eStore = expensesStore();
 
+  var form = "";
+
+  if (mode === "add") {
+    form = eStore.createExpenseForm;
+  } else {
+    form = eStore.editExpenseForm;
+  }
+
   function onCancelExpenseHandler() {
-    props.onClearExpense();
+    onClearExpense();
   }
 
   function submitHandler(e) {
-    e.preventDefault();
-
     let formValid = true;
 
-    if (!eStore.createExpenseForm.title) {
+    if (!form.title) {
       setTitleValid(false);
       formValid = false;
     } else {
       setTitleValid(true);
     }
-    if (!eStore.createExpenseForm.amount) {
+    if (!form.amount) {
       setAmountValid(false);
       formValid = false;
     } else {
       setAmountValid(true);
     }
-
-    if (eStore.createExpenseForm.category === "Pick") {
+    if (form.category === "Pick") {
       setCategoryValid(false);
       formValid = false;
     } else {
@@ -42,9 +53,16 @@ function ExpenseForm(props) {
     }
 
     if (formValid) {
-      // form valid, run createExpense from eStore
-      eStore.createExpense(e);
-      props.onSubmitExpense();
+      if (mode === "add") {
+        e.preventDefault();
+        // form valid, run createExpense from eStore
+        eStore.createExpense(e);
+        onSubmitCreateExpense();
+      } else {
+        eStore.editExpense(e);
+        onSubmitEditExpense();
+        eStore.fetchExpenses();
+      }
     }
   }
 
@@ -56,9 +74,13 @@ function ExpenseForm(props) {
           <input
             type="text"
             name="title"
-            value={eStore.createExpenseForm.title}
+            value={form.title}
             onChange={(e) => {
-              eStore.updateExpenseForm(e);
+              if (mode === "add") {
+                eStore.updateExpenseForm(e);
+              } else {
+                eStore.updateEditExpenseForm(e);
+              }
             }}
             placeholder="Ex: New TV"
           />
@@ -71,9 +93,13 @@ function ExpenseForm(props) {
             name="amount"
             min="0.01"
             step="0.01"
-            value={eStore.createExpenseForm.amount}
+            value={form.amount}
             onChange={(e) => {
-              eStore.updateExpenseForm(e);
+              if (mode === "add") {
+                eStore.updateExpenseForm(e);
+              } else {
+                eStore.updateEditExpenseForm(e);
+              }
             }}
             placeholder="200"
           />
@@ -83,12 +109,16 @@ function ExpenseForm(props) {
           <label>Date</label>
           <input
             type="date"
-            value={eStore.createExpenseForm.date}
+            value={form.date}
             name="date"
             min="2019-01-01"
             max="2025-01-01"
             onChange={(e) => {
-              eStore.updateExpenseForm(e);
+              if (mode === "add") {
+                eStore.updateExpenseForm(e);
+              } else {
+                eStore.updateEditExpenseForm(e);
+              }
             }}
             placeholder="today"
           />
@@ -98,7 +128,11 @@ function ExpenseForm(props) {
           <select
             name="category"
             onChange={(e) => {
-              eStore.updateExpenseForm(e);
+              if (mode === "add") {
+                eStore.updateExpenseForm(e);
+              } else {
+                eStore.updateEditExpenseForm(e);
+              }
             }}
           >
             <option value="Pick">Choose a category below</option>
@@ -115,7 +149,12 @@ function ExpenseForm(props) {
 
       <div className="new-expense__actions">
         <button onClick={onCancelExpenseHandler}>Cancel</button>
-        <button type="submit">Add Expense</button>
+        <button type="submit">
+          {mode === "add" ? "Add" : "Submit Changes"}
+        </button>
+        {mode === "edit" && (
+          <button onClick={() => eStore.deleteExpense(form._id)}>DELETE</button>
+        )}
       </div>
     </form>
   );

@@ -22,8 +22,9 @@ function NewExpense(props) {
   if (addExpenseShowing) {
     toolBar = (
       <ExpenseForm
-        onSubmitExpense={onSubmitExpenseHandler}
+        onSubmitCreateExpense={onSubmitExpenseHandler}
         onClearExpense={onClearExpenseHandler}
+        mode={props.mode}
       />
     );
   }

@@ -226,7 +226,7 @@ function Expenses({ props }) {
 
   return (
     <Card className="expenses">
-      <NewExpense onAddExpense={addExpenseHandler}></NewExpense>
+      <NewExpense onAddExpense={addExpenseHandler} mode="add"></NewExpense>
       <Filters
         onYearlyFilterChange={filterChangeHandler}
         onMonthlyFilterChange={monthlyFilterChangeHandler}

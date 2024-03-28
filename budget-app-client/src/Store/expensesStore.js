@@ -6,8 +6,15 @@ const expensesStore = create((set) => ({
   createExpenseForm: {
     title: "",
     amount: "",
-    date: "",
+    date: new Date(),
     category: "",
+  },
+  editExpenseForm: {
+    _id: null,
+    title: "init",
+    amount: "init",
+    date: new Date(),
+    category: "init",
   },
 
   fetchExpenses: async () => {
@@ -19,6 +26,7 @@ const expensesStore = create((set) => ({
       const res = await axios.get("http://localhost:3001/api/v1/expenses", {
         withCredentials: true,
         "Content-Type": "json",
+        "Cache-Control": "no-cache",
       });
 
       console.log("response data", res.data.data);
@@ -43,6 +51,79 @@ const expensesStore = create((set) => ({
         },
       };
     });
+  },
+
+  updateEditExpenseForm: (e) => {
+    const { editExpenseForm } = expensesStore.getState();
+    const { name, value } = e.target;
+
+    console.log("updating edit expense form");
+
+    set((state) => {
+      return {
+        editExpenseForm: {
+          ...state.editExpenseForm,
+          [name]: value,
+        },
+      };
+    });
+
+    console.log(editExpenseForm);
+  },
+
+  initEditExpenseForm: (expense) => {
+    const { editExpenseForm } = expensesStore.getState();
+    console.log("running init", expense);
+    set({
+      editExpenseForm: {
+        _id: expense._id,
+        title: expense.title,
+        amount: expense.amount,
+        date: expense.date,
+        category: expense.category,
+      },
+    });
+    console.log("new edit expense form", editExpenseForm);
+  },
+
+  editExpense: async (e) => {
+    const {
+      editExpenseForm: { _id, title, amount, date, category },
+      expenses,
+    } = expensesStore.getState();
+    const { editExpenseForm } = expensesStore.getState();
+    try {
+      console.log("NEW TITLE: ", title);
+      const res = axios.put(
+        `http://localhost:3001/api/v1/expenses/${_id}`,
+        editExpenseForm,
+        { withCredentials: true }
+      );
+
+      const updatedExpenses = expenses.filter((expense) => {
+        return expense._id !== _id;
+      });
+
+      // update expenses
+      const newExpenses = [...expenses];
+      const expenseIndex = expenses.findIndex((expense) => {
+        return expense._id === _id;
+      });
+      newExpenses[expenseIndex] = res.data.data;
+
+      set({
+        expenses: newExpenses,
+        editExpenseForm: {
+          _id: null,
+          title,
+          amount,
+          date,
+          category,
+        },
+      });
+    } catch (err) {
+      console.log("failed to edit");
+    }
   },
 
   createExpense: async (e) => {
@@ -70,7 +151,7 @@ const expensesStore = create((set) => ({
         createExpenseForm: {
           title: "",
           amount: "",
-          date: "",
+          date: new Date(),
           category: "",
         },
       });
