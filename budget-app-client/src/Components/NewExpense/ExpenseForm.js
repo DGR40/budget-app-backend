@@ -1,55 +1,40 @@
 import "./ExpenseForm.css";
 import React, { useState } from "react";
-import { getAuthToken } from "../../Utils/auth";
-import { useNavigate } from "react-router-dom";
+import expensesStore from "../../Store/expensesStore";
+import useInput from "../../Hooks/use-input";
 
 function ExpenseForm(props) {
-  const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredAmount, setEnteredAmount] = useState("");
-  const [enteredDate, setEnteredDate] = useState(new Date());
-  const [enteredCategory, setEnteredCategory] = useState("Pick");
-
   const [titleValid, setTitleValid] = useState(true);
   const [amountValid, setAmountValid] = useState(true);
   const [categoryValid, setCategoryValid] = useState(true);
 
-  const navigate = useNavigate();
+  const isNotEmpty = (value) => value.trim() !== "";
 
-  function inputChangeHandler(identifier, value) {
-    if (identifier === "title") {
-      setEnteredTitle(value);
-    } else if (identifier === "date") {
-      setEnteredDate(value);
-    } else if (identifier === "amount") {
-      setEnteredAmount(parseFloat(value));
-    } else if (identifier === "category") {
-      setEnteredCategory(value);
-    }
-  }
+  const eStore = expensesStore();
 
   function onCancelExpenseHandler() {
     props.onClearExpense();
   }
 
-  function submitHandler(event) {
-    event.preventDefault();
+  function submitHandler(e) {
+    e.preventDefault();
 
     let formValid = true;
 
-    if (!enteredTitle) {
+    if (!eStore.createExpenseForm.title) {
       setTitleValid(false);
       formValid = false;
     } else {
       setTitleValid(true);
     }
-    if (!enteredAmount) {
+    if (!eStore.createExpenseForm.amount) {
       setAmountValid(false);
       formValid = false;
     } else {
       setAmountValid(true);
     }
 
-    if (enteredCategory === "Pick") {
+    if (eStore.createExpenseForm.category === "Pick") {
       setCategoryValid(false);
       formValid = false;
     } else {
@@ -57,37 +42,9 @@ function ExpenseForm(props) {
     }
 
     if (formValid) {
-      const expenseData = {
-        title: enteredTitle,
-        date: new Date(enteredDate),
-        amount: enteredAmount,
-        category: enteredCategory,
-      };
-
-      console.log(expenseData);
-      addExpense(JSON.stringify(expenseData));
-      setEnteredTitle("");
-      setEnteredAmount("");
-      setEnteredDate("");
-      setEnteredCategory("");
-    }
-  }
-
-  async function addExpense(expenseData) {
-    const token = getAuthToken();
-    const response = await fetch("http://localhost:3001/api/v1/expenses", {
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: expenseData,
-    });
-    if (response.ok) {
-      console.log("new expense added");
-      window.location.reload();
-    } else {
-      console.log("that didn't work!");
+      // form valid, run createExpense from eStore
+      eStore.createExpense(e);
+      props.onSubmitExpense();
     }
   }
 
@@ -98,10 +55,11 @@ function ExpenseForm(props) {
           <label>Title</label>
           <input
             type="text"
-            value={enteredTitle}
-            onChange={(event) =>
-              inputChangeHandler("title", event.target.value)
-            }
+            name="title"
+            value={eStore.createExpenseForm.title}
+            onChange={(e) => {
+              eStore.updateExpenseForm(e);
+            }}
             placeholder="Ex: New TV"
           />
           {!titleValid && <label>Please enter a title...</label>}
@@ -110,12 +68,13 @@ function ExpenseForm(props) {
           <label>Amount</label>
           <input
             type="number"
+            name="amount"
             min="0.01"
             step="0.01"
-            value={enteredAmount}
-            onChange={(event) =>
-              inputChangeHandler("amount", event.target.value)
-            }
+            value={eStore.createExpenseForm.amount}
+            onChange={(e) => {
+              eStore.updateExpenseForm(e);
+            }}
             placeholder="200"
           />
           {!amountValid && <label>Please enter an amount...</label>}
@@ -124,19 +83,23 @@ function ExpenseForm(props) {
           <label>Date</label>
           <input
             type="date"
-            value={enteredDate}
+            value={eStore.createExpenseForm.date}
+            name="date"
             min="2019-01-01"
             max="2025-01-01"
-            onChange={(event) => inputChangeHandler("date", event.target.value)}
+            onChange={(e) => {
+              eStore.updateExpenseForm(e);
+            }}
             placeholder="today"
           />
         </div>
         <div className="new-expense__control">
           <label>Category</label>
           <select
-            onChange={(event) =>
-              inputChangeHandler("category", event.target.value)
-            }
+            name="category"
+            onChange={(e) => {
+              eStore.updateExpenseForm(e);
+            }}
           >
             <option value="Pick">Choose a category below</option>
             <option value="Food and Drink">Food and Drink</option>

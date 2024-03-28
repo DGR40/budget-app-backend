@@ -6,11 +6,6 @@ function NewExpense(props) {
   const [addExpenseShowing, setAddExpenseShowing] = useState(false);
 
   function onSubmitExpenseHandler(enteredData) {
-    const expenseData = {
-      ...enteredData,
-      id: Math.random().toString(),
-    };
-    props.onAddExpense(expenseData);
     setAddExpenseShowing(false);
   }
 
