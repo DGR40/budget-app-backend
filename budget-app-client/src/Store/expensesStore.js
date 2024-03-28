@@ -3,6 +3,7 @@ import axios from "axios";
 
 const expensesStore = create((set) => ({
   expenses: null,
+  isEditing: false,
   createExpenseForm: {
     title: "",
     amount: "",
@@ -15,6 +16,13 @@ const expensesStore = create((set) => ({
     amount: "init",
     date: new Date(),
     category: "init",
+  },
+
+  setIsEditing: (value) => {
+    const { isEditing } = expensesStore.getState();
+    set({ isEditing: value });
+
+    console.log("IS EDITING UPDATED", isEditing);
   },
 
   fetchExpenses: async () => {

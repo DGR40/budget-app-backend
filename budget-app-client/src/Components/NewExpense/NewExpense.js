@@ -1,8 +1,10 @@
 import "./NewExpense.css";
 import ExpenseForm from "./ExpenseForm";
 import { useState } from "react";
+import expensesStore from "../../Store/expensesStore";
 
 function NewExpense(props) {
+  const eStore = expensesStore.getState();
   const [addExpenseShowing, setAddExpenseShowing] = useState(false);
 
   function onSubmitExpenseHandler(enteredData) {
@@ -17,7 +19,11 @@ function NewExpense(props) {
     setAddExpenseShowing(true);
   }
 
-  let toolBar = <button onClick={onAddExpenseHandler}>Add Expense</button>;
+  let toolBar = (
+    <button className="new-expense-button" onClick={onAddExpenseHandler}>
+      Add Expense
+    </button>
+  );
 
   if (addExpenseShowing) {
     toolBar = (

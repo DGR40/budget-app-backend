@@ -31,9 +31,11 @@ function ExpenseForm({
   }
 
   function submitHandler(e) {
+    e.preventDefault();
     let formValid = true;
 
     if (!form.title) {
+      console.log("title blank!");
       setTitleValid(false);
       formValid = false;
     } else {
@@ -66,8 +68,27 @@ function ExpenseForm({
     }
   }
 
+  function getDateForDatePicker(full) {
+    console.log("get full year", full);
+    let dateObj = {};
+    if (mode === "edit") {
+      dateObj = new Date(full);
+    } else {
+      dateObj = full;
+    }
+    var year = dateObj.getFullYear();
+    var month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    var day = String(dateObj.getDate()).padStart(2, "0");
+
+    var formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
+
   return (
-    <form onSubmit={submitHandler}>
+    <form
+      onSubmit={submitHandler}
+      className={mode === "edit" ? "edit-form" : ""}
+    >
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
@@ -109,7 +130,7 @@ function ExpenseForm({
           <label>Date</label>
           <input
             type="date"
-            value={form.date}
+            value={getDateForDatePicker(form.date)}
             name="date"
             min="2019-01-01"
             max="2025-01-01"
@@ -148,12 +169,28 @@ function ExpenseForm({
       </div>
 
       <div className="new-expense__actions">
-        <button onClick={onCancelExpenseHandler}>Cancel</button>
-        <button type="submit">
-          {mode === "add" ? "Add" : "Submit Changes"}
-        </button>
+        <div>
+          <button
+            className="new-expense-button"
+            onClick={onCancelExpenseHandler}
+          >
+            Back
+          </button>
+          <button type="submit" className="new-expense-button">
+            {mode === "add" ? "Add" : "Update"}
+          </button>
+        </div>
+
         {mode === "edit" && (
-          <button onClick={() => eStore.deleteExpense(form._id)}>DELETE</button>
+          <button
+            className="new-expense-button delete"
+            onClick={() => {
+              eStore.deleteExpense(form._id);
+              eStore.setIsEditing(false);
+            }}
+          >
+            DELETE
+          </button>
         )}
       </div>
     </form>
