@@ -48,6 +48,10 @@ const Dashboard = (props) => {
 
   return (
     <Card className="dashboard">
+      <Card className={`total ${net > 0 ? "green" : "red"} above-below-budget`}>
+        <h1>{net >= 0 ? USDollar.format(net) : USDollar.format(net * -1)}</h1>
+        <p>{net > 0 ? "Below Budget" : "Above Budget"}</p>
+      </Card>
       <div className="dashboard-container">
         <div className="dashboard-container">
           <Card className="total">
@@ -69,11 +73,9 @@ const Dashboard = (props) => {
             </Card>
           )}
 
-          <Card className={`total ${net > 0 ? "green" : "red"}`}>
-            <h1>
-              {net >= 0 ? USDollar.format(net) : USDollar.format(net * -1)}
-            </h1>
-            <p>{net > 0 ? "Below Budget" : "Above Budget"}</p>
+          <Card className={`total`}>
+            <h1>{USDollar.format(maxBudget)}</h1>
+            <p>Max Budget</p>
           </Card>
         </div>
       </div>
