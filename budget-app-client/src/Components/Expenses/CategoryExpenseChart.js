@@ -12,7 +12,6 @@ const CategoryExpenseChart = (props) => {
 
   for (const expense of props.expenses) {
     const expenseCategory = expense.category;
-    console.log(chartCategoryData[expenseCategory]);
     chartCategoryData[expenseCategory] += expense.amount;
   }
 

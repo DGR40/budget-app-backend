@@ -17,6 +17,10 @@
   justify-content: flex-end;
 }
 
+.chart-bar__inner.selected {
+  background-color: aqua;
+}
+
 .chart-bar__fill {
   background-color: #4826b9;
   width: 100%;

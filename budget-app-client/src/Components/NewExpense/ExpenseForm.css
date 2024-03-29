@@ -7,13 +7,28 @@
 }
 
 .edit-form {
-  background-color: red;
   padding: 1rem;
+  position: relative;
+  color: white;
 }
 
-.delete {
-  width: 100%;
-  background-color: red;
+.float-right {
+  position: absolute;
+  top: 1rem;
+  right: 0px;
+  background-color: transparent !important;
+  border: none !important;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+}
+
+.expand {
+  border: none !important;
+  font-size: 24px;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
 }
 
 .error-label {
@@ -37,8 +52,23 @@
   max-width: 100%;
 }
 
-.new-expense__actions {
-  text-align: right;
+.new-expense__actions_add {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.new-expense__actions_edit {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+.new-expense__actions_edit > button {
+  background-color: #2f2f2f;
+}
+
+.new-expense__actions_edit {
+  justify-content: space-between;
 }
 
 @media (max-width: 852px) {
@@ -47,6 +77,6 @@
   }
 
   .new-expense__actions {
-    text-align: center;
+    justify-content: space-between;
   }
 }

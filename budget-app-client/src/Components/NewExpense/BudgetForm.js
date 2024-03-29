@@ -2,15 +2,8 @@ import "./ExpenseForm.css";
 import React, { useState } from "react";
 import expensesStore from "../../Store/expensesStore";
 import useInput from "../../Hooks/use-input";
-import {
-  faTrash,
-  faArrowLeft,
-  faCheck,
-  faArrowUp,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function ExpenseForm({
+function BudgetForm({
   onSubmitCreateExpense,
   onClearExpense,
   onSubmitEditExpense,
@@ -41,8 +34,6 @@ function ExpenseForm({
     e.preventDefault();
     let formValid = true;
 
-    console.log("FC: ", form.category);
-
     if (!form.title) {
       console.log("title blank!");
       setTitleValid(false);
@@ -56,7 +47,7 @@ function ExpenseForm({
     } else {
       setAmountValid(true);
     }
-    if (form.category === "Pick" || !form.category) {
+    if (form.category === "Pick") {
       setCategoryValid(false);
       formValid = false;
     } else {
@@ -67,7 +58,7 @@ function ExpenseForm({
       if (mode === "add") {
         e.preventDefault();
         // form valid, run createExpense from eStore
-        await eStore.createExpense(e);
+        eStore.createExpense(e);
         onSubmitCreateExpense();
       } else {
         await eStore.editExpense(e);
@@ -164,7 +155,6 @@ function ExpenseForm({
                 eStore.updateEditExpenseForm(e);
               }
             }}
-            value={form.category}
           >
             <option value="Pick">Choose a category below</option>
             <option value="Food and Drink">Food and Drink</option>
@@ -177,21 +167,21 @@ function ExpenseForm({
           {!categoryValid && <label>Please select a category...</label>}
         </div>
       </div>
-      {mode === "add" && (
-        <div className={"new-expense__actions_add"}>
+
+      <div className="new-expense__actions">
+        <div>
           <button
             className="new-expense-button"
             onClick={onCancelExpenseHandler}
           >
-            <FontAwesomeIcon icon={faArrowLeft} />
+            Back
           </button>
           <button type="submit" className="new-expense-button">
-            <FontAwesomeIcon icon={faCheck} />
+            {mode === "add" ? "Add" : "Update"}
           </button>
         </div>
-      )}
-      {mode === "edit" && (
-        <div className={"new-expense__actions_edit"}>
+
+        {mode === "edit" && (
           <button
             className="new-expense-button delete"
             onClick={() => {
@@ -199,13 +189,10 @@ function ExpenseForm({
               eStore.setIsEditing(false);
             }}
           >
-            <FontAwesomeIcon icon={faTrash} />
+            DELETE
           </button>
-          <button type="submit" className="new-expense-button">
-            <FontAwesomeIcon icon={faCheck} />
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </form>
   );
 }

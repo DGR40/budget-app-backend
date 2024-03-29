@@ -8,6 +8,8 @@ const Chart = (props) => {
 
   props.dataPoints.forEach((point) => (totalAmount += point.value));
 
+  console.log("selected category", props.selectedCategory === "Food and Drink");
+
   return (
     <div className="chart">
       {props.dataPoints.map((data) => (
@@ -16,11 +18,7 @@ const Chart = (props) => {
           maxValue={props.budgetDict[data.label]}
           label={data.label}
           key={data.label}
-          className={
-            props.selectedCategory === data.label
-              ? "chart-bar__fill selectedBar"
-              : "chart-bar__fill"
-          }
+          selected={props.selectedCategory === data.label}
         />
       ))}
     </div>
