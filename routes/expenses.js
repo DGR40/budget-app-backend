@@ -27,6 +27,9 @@ router
     getExpenses
   )
   .post(protect, createExpense);
-router.route("/:id").put(protect, updateExpense).delete(protect, deleteExpense);
+router
+  .route("/:id")
+  .post(protect, updateExpense)
+  .delete(protect, deleteExpense);
 
 module.exports = router;

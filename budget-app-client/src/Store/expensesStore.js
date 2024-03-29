@@ -4,6 +4,7 @@ import axios from "axios";
 const expensesStore = create((set) => ({
   expenses: null,
   isEditing: false,
+  eTag: null,
   createExpenseForm: {
     title: "",
     amount: "",
@@ -20,13 +21,15 @@ const expensesStore = create((set) => ({
 
   setIsEditing: (value) => {
     const { isEditing } = expensesStore.getState();
+
     set({ isEditing: value });
 
     console.log("IS EDITING UPDATED", isEditing);
   },
 
-  fetchExpenses: async () => {
+  fetchExpenses: async (date) => {
     const { expenses } = expensesStore.getState();
+    const { eTag } = expensesStore.getState();
     console.log("attempting to get expenses");
 
     try {
@@ -35,6 +38,7 @@ const expensesStore = create((set) => ({
         withCredentials: true,
         "Content-Type": "json",
         "Cache-Control": "no-cache",
+        "If-None-Match": eTag,
       });
 
       console.log("response data", res.data.data);
@@ -43,6 +47,8 @@ const expensesStore = create((set) => ({
       set({
         expenses: res.data.data,
       });
+
+      set({ eTag: res.data.ETag });
 
       console("NEW EXPENSES", expenses);
     } catch (err) {}
@@ -102,7 +108,7 @@ const expensesStore = create((set) => ({
     const { editExpenseForm } = expensesStore.getState();
     try {
       console.log("NEW TITLE: ", title);
-      const res = axios.put(
+      const res = axios.post(
         `http://localhost:3001/api/v1/expenses/${_id}`,
         editExpenseForm,
         { withCredentials: true }

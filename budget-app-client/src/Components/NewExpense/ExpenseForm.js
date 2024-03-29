@@ -30,7 +30,7 @@ function ExpenseForm({
     onClearExpense();
   }
 
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
     let formValid = true;
 
@@ -61,9 +61,9 @@ function ExpenseForm({
         eStore.createExpense(e);
         onSubmitCreateExpense();
       } else {
-        eStore.editExpense(e);
+        await eStore.editExpense(e);
+        await eStore.fetchExpenses();
         onSubmitEditExpense();
-        eStore.fetchExpenses();
       }
     }
   }
