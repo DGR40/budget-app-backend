@@ -12,6 +12,11 @@
   padding-right: 1rem;
 }
 
+.above-below-budget {
+  width: 100% !important;
+  background-color: red;
+}
+
 .dashboard__fallback {
   margin-left: 1rem;
 }

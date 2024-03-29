@@ -31,6 +31,7 @@ function ExpenseForm({
   }
 
   function submitHandler(e) {
+    e.preventDefault();
     let formValid = true;
 
     if (!form.title) {
