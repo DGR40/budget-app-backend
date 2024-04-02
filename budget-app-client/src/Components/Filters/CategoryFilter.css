@@ -3,14 +3,51 @@
   flex-direction: row;
   height: auto;
   min-width: 0;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: stretch;
   width: 100%;
   border-left: 2px solid #a892ee;
   border-right: 2px solid #a892ee;
   border-bottom: none;
   border-radius: 0px;
+  background-color: #2a2a2a;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.category {
+  height: 18vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #2a2a2a;
+  cursor: pointer;
+  justify-content: center;
   padding: 0.5rem;
+}
+
+.circle-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex: 3;
+}
+
+.chart-bar__inner:hover {
+  filter: brightness(1.4);
+}
+
+.chart-bar__inner.active.selected {
+  filter: brightness(1.5);
+}
+
+.chart-bar__inner.active:not(.selected) {
+  filter: brightness(0.5);
+}
+
+.chart-bar__inner.inactive {
+  filter: brightness(1);
 }
 
 @media only screen and (max-width: 800px) {

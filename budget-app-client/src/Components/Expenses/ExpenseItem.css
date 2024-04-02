@@ -4,7 +4,7 @@
   align-items: center;
   padding: 0.5rem;
   margin: 1rem 0;
-  background-color: #4b4b4b;
+  background-color: rgb(255, 255, 255, 0.1);
   border-radius: 12px;
 }
 
@@ -16,23 +16,24 @@
   justify-content: flex-start;
   flex: 1;
   color: white;
+  font-size: 0.9rem;
 }
 
 .expense-item h2 {
   color: #3a3a3a;
-  font-size: 1rem;
+  font-size: 0.9rem;
   flex: 1;
   margin: 0;
   color: white;
 }
 
 .expense-item__price {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
-  color: white;
-  background-color: #40005d;
-  border: 1px solid white;
+  color: #40005d;
+  background-color: #b19cd8;
   padding: 0.5rem;
+  border-radius: 8px;
 
   margin: 0;
 }

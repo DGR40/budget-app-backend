@@ -21,10 +21,9 @@ const Header = (props) => {
       <div className="banner__section">
         {store.loggedIn == true && (
           <>
-            <Link to="/settings" className="banner__settings">
-              Settings
-            </Link>
-            <button onClick={logoutHandler}>Logout</button>
+            <button className="banner__settings" onClick={logoutHandler}>
+              Logout
+            </button>
           </>
         )}
       </div>

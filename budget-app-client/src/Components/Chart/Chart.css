@@ -1,5 +1,5 @@
 .chart {
-  padding: 1rem;
+  padding: 1rem 0rem;
   border-radius: 0px;
   text-align: center;
   display: flex;
@@ -9,10 +9,6 @@
   border-left: 2px solid #a892ee;
   color: white;
   background-color: #2e2e2e;
-}
-
-.selected {
-  background-color: red;
 }
 
 @media (max-width: 800px) {

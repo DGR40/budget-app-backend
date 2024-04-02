@@ -1,4 +1,5 @@
 import React from "react";
+import { useRef } from "react";
 
 import "./ChartBar.css";
 
@@ -11,10 +12,23 @@ const ChartBar = (props) => {
 
   let color = barFillHeight > 100 ? "red" : "purple";
 
+  console.log(props.selectedCategory);
+
+  const innerBarRef = useRef();
+
+  const innerBarHeight = innerBarRef.current.offsetY;
+
   return (
     <div className="chart-bar">
-      <div className="chart-bar__max_label">{barFillHeight + "%"}</div>
-      <div className={`chart-bar__inner ${props.selected ? "selected" : ""}`}>
+      <div
+        className="chart-bar__max_label"
+        style={{
+          bottom: innerBarHeight,
+        }}
+      >
+        {barFillHeight + "%"}
+      </div>
+      <div className={`chart-bar__inner`} ref={innerBarRef}>
         <div
           className={(props.className, color)}
           style={{
@@ -22,7 +36,7 @@ const ChartBar = (props) => {
           }}
         ></div>
       </div>
-      <div className="chart-bar__label">{props.label}</div>
+      {/* <div className="chart-bar__label">{props.label}</div> */}
     </div>
   );
 };

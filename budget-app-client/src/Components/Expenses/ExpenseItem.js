@@ -27,6 +27,11 @@ function ExpenseItem({ eid, date, title, amount, category, expense }) {
     }
   }
 
+  let USDollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   return (
     <li>
       <Card>
@@ -53,7 +58,9 @@ function ExpenseItem({ eid, date, title, amount, category, expense }) {
               <div className="expense-item__description">
                 <h2>{title}</h2>
                 {category}
-                <div className="expense-item__price">${amount}</div>
+                <div className="expense-item__price">
+                  {USDollar.format(amount)}
+                </div>
               </div>
               <button className="expand" onClick={toggleEditMode}>
                 <FontAwesomeIcon icon={faEllipsis} />

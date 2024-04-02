@@ -29,6 +29,7 @@ const CategoryExpenseChart = (props) => {
       dataPoints={adjustedCategoryData}
       budgetDict={props.budgetDict}
       selectedCategory={props.selectedCategory}
+      activeCategories={props.activeCategories}
     />
   );
 };

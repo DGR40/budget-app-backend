@@ -10,7 +10,7 @@ function ExpensesList(props) {
   }
 
   return (
-    <Card>
+    <div>
       <div className="expense-list__total">
         {props.items.length} Item{props.items.length === 1 ? "" : "s"}
         <input
@@ -34,7 +34,7 @@ function ExpensesList(props) {
           ></ExpenseItem>
         ))}
       </ul>
-    </Card>
+    </div>
   );
 }
 

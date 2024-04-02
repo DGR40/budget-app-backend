@@ -8,7 +8,7 @@ const Chart = (props) => {
 
   props.dataPoints.forEach((point) => (totalAmount += point.value));
 
-  console.log("selected category", props.selectedCategory === "Food and Drink");
+  console.log(props.selectedCategory);
 
   return (
     <div className="chart">
@@ -19,6 +19,7 @@ const Chart = (props) => {
           label={data.label}
           key={data.label}
           selected={props.selectedCategory === data.label}
+          selectedCategory={props.selectedCategory}
         />
       ))}
     </div>

@@ -11,7 +11,6 @@
   display: flex;
   align-items: baseline;
   justify-content: center;
-  margin: 0.5rem 0;
 }
 
 .expenses-filter label {
@@ -22,11 +21,12 @@
 
 .expenses-filter select {
   font: inherit;
-  padding: 0.5rem 0rem;
+  padding: 0.5rem 0.3rem;
   font-weight: bold;
   border-radius: 6px;
-  background-color: #2a2a2a;
+  background-color: rgb(255, 255, 255, 0.1);
   color: white;
+  border: none;
 }
 
 .time-filter {

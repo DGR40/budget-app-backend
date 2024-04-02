@@ -113,8 +113,11 @@ function ExpenseForm({
               }
             }}
             placeholder="Ex: New TV"
+            className={mode === "add" && "add-form-input"}
           />
-          {!titleValid && <label>Please enter a title...</label>}
+          {!titleValid && (
+            <label className="error-text">Please enter a title...</label>
+          )}
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
@@ -132,8 +135,11 @@ function ExpenseForm({
               }
             }}
             placeholder="200"
+            className={mode === "add" ? "add-form-input" : ""}
           />
-          {!amountValid && <label>Please enter an amount...</label>}
+          {!amountValid && (
+            <label className="error-text">Please enter an amount...</label>
+          )}
         </div>
         <div className="new-expense__control">
           <label>Date</label>
@@ -150,6 +156,7 @@ function ExpenseForm({
                 eStore.updateEditExpenseForm(e);
               }
             }}
+            className={mode === "add" && "add-form-input"}
             placeholder="today"
           />
         </div>
@@ -165,6 +172,7 @@ function ExpenseForm({
               }
             }}
             value={form.category}
+            className={mode === "add" && "add-form-input"}
           >
             <option value="Pick">Choose a category below</option>
             <option value="Food and Drink">Food and Drink</option>
@@ -174,16 +182,18 @@ function ExpenseForm({
             <option value="Subscriptions">Subscriptions</option>
             <option value="Transportation">Transportation</option>
           </select>
-          {!categoryValid && <label>Please select a category...</label>}
+          {!categoryValid && (
+            <label className="error-text">Please select a category...</label>
+          )}
         </div>
       </div>
       {mode === "add" && (
-        <div className={"new-expense__actions_add"}>
+        <div className={"new-expense__actions_edit"}>
           <button
-            className="new-expense-button"
+            className="new-expense-button delete"
             onClick={onCancelExpenseHandler}
           >
-            <FontAwesomeIcon icon={faArrowLeft} />
+            <FontAwesomeIcon icon={faTrash} />
           </button>
           <button type="submit" className="new-expense-button">
             <FontAwesomeIcon icon={faCheck} />

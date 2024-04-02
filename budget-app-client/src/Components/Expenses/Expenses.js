@@ -181,16 +181,7 @@ function Expenses({ props }) {
   // get ExpenseList
   function getExpenseList(seeExpenses, expenses) {
     if (seeExpenses) {
-      return (
-        <div>
-          <ExpensesList
-            items={expenses}
-            yearMode={yearMode}
-            onSearch={searchHandler}
-            searchTerm={searchTerm}
-          />
-        </div>
-      );
+      return <div></div>;
     } else if (!seeExpenses && expenses.length > 0) {
       return (
         <button onClick={onSeeExpensesHandler} className="expenses-button">
@@ -243,29 +234,43 @@ function Expenses({ props }) {
         selectedMobileCategory={mobileCategoryFilter}
       />
       {!expensesLoading && (
-        <Dashboard
-          expenses={filteredExpensesOfCategory}
-          selectedMonth={filteredMonth}
-          selectedYear={filteredYear}
-          selectedCategory={filteredCategory}
-          selectedYearWithMonth={filteredYearWithMonth}
-          maxBudget={budgetDict["All"]}
-          budgetDict={budgetDict}
-          yearMode={yearMode}
-        />
+        <>
+          <CategoryFilter
+            onCategoryChange={categoryChangeHandler}
+            selectedCategory={filteredCategory}
+            expenses={filteredExpenses}
+            budgetDict={budgetDict}
+          />
+          <Dashboard
+            expenses={filteredExpensesOfCategory}
+            selectedMonth={filteredMonth}
+            selectedYear={filteredYear}
+            selectedCategory={filteredCategory}
+            selectedYearWithMonth={filteredYearWithMonth}
+            maxBudget={budgetDict["All"]}
+            budgetDict={budgetDict}
+            yearMode={yearMode}
+          />
+        </>
       )}
-
-      <CategoryFilter
-        onCategoryChange={categoryChangeHandler}
-        selectedCategory={filteredCategory}
-      />
-      <CategoryExpenseChart
-        expenses={filteredExpenses}
-        budgetDict={budgetDict}
-        selectedCategory={filteredCategory}
-      />
-      <Card className="expense-list-card">
-        {getExpenseList(seeExpenses, filteredExpensesOfText)}
+      <Card
+        className={`expense-list-card ${
+          filteredExpenses.length == 0 || filteredExpensesOfCategory.length == 0
+            ? "justify-center"
+            : ""
+        }`}
+      >
+        {filteredExpenses.length >= 1 &&
+        filteredExpensesOfCategory.length >= 1 ? (
+          <ExpensesList
+            items={filteredExpensesOfText}
+            yearMode={yearMode}
+            onSearch={searchHandler}
+            searchTerm={searchTerm}
+          />
+        ) : (
+          <h3>No Expenses Recorded</h3>
+        )}
       </Card>
     </Card>
   );

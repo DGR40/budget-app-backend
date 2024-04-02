@@ -3,21 +3,24 @@
   text-align: center;
   justify-content: space-between;
   display: flex;
-  color: white;
+  color: #40005d;
   margin: none;
-  background-color: #40005d;
+  background-color: #b19cd8;
   padding: 1rem;
   font-weight: bold;
-  border-bottom: 1px solid white;
 }
 
 .banner__settings {
   color: white;
   text-decoration: none;
+  border: none;
+  background-color: transparent;
+  font: inherit;
+  color: #40005d;
 }
 
 .banner__settings:hover {
-  color: #a892ee;
+  color: white;
   cursor: pointer;
 }
 
@@ -33,4 +36,12 @@
 .banner__text {
   margin: none;
   font-size: 3rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .banner {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
