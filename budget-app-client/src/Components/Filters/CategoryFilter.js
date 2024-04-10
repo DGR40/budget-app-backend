@@ -1,8 +1,6 @@
-import { useState } from "react";
 import CategoryFilterBubble from "./CategoryFilterBubble.js";
 import "./CategoryFilter.css";
 import Card from "../UI/Card.js";
-import ChartBar from "../Chart/ChartBar.js";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";

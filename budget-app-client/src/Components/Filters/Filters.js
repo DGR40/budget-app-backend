@@ -1,4 +1,3 @@
-import Card from "../UI/Card";
 import "./Filters.css";
 import MonthlyExpenseFilter from "./MonthlyExpenseFilter";
 import ExpenseFilter from "./ExpenseFilter";

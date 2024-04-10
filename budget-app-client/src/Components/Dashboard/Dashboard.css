@@ -15,6 +15,7 @@
 .above-below-budget {
   width: 100% !important;
   background-color: #ff6962;
+  color: black;
 }
 
 .dashboard__fallback {

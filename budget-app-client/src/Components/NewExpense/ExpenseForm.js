@@ -1,13 +1,7 @@
 import "./ExpenseForm.css";
 import React, { useState } from "react";
 import expensesStore from "../../Store/expensesStore";
-import useInput from "../../Hooks/use-input";
-import {
-  faTrash,
-  faArrowLeft,
-  faCheck,
-  faArrowUp,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faCheck, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ExpenseForm({

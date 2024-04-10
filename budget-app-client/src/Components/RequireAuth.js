@@ -22,5 +22,11 @@ export default function RequireAuth({ children }) {
     console.log("store.loggedIn is false");
     return <Navigate to="/login" />;
   }
-  return <div>{children}</div>;
+
+  if (store.loggedIn) {
+    if (store.username == "") {
+      store.checkAuth();
+    }
+    return <div>{children}</div>;
+  }
 }

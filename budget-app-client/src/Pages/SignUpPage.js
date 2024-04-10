@@ -1,4 +1,3 @@
-import { json, redirect } from "react-router-dom";
 import SignUpForm from "../Components/SignUpForm.js";
 import Header from "../Components/UI/Header.js";
 

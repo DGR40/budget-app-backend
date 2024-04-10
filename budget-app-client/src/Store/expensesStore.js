@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+axios.defaults.baseURL = "http://localhost:3001/";
 
 const expensesStore = create((set) => ({
   expenses: null,
@@ -20,28 +21,21 @@ const expensesStore = create((set) => ({
   },
 
   setIsEditing: (value) => {
-    const { isEditing } = expensesStore.getState();
-
     set({ isEditing: value });
-
-    console.log("IS EDITING UPDATED", isEditing);
   },
 
   fetchExpenses: async (date) => {
     const { expenses } = expensesStore.getState();
     const { eTag } = expensesStore.getState();
-    console.log("attempting to get expenses");
 
     try {
       // fetch the expenses
-      const res = await axios.get("http://localhost:3001/api/v1/expenses", {
+      const res = await axios.get("api/v1/expenses", {
         withCredentials: true,
         "Content-Type": "json",
         "Cache-Control": "no-cache",
         "If-None-Match": eTag,
       });
-
-      console.log("response data", res.data.data);
 
       // set to state
       set({
@@ -49,8 +43,6 @@ const expensesStore = create((set) => ({
       });
 
       set({ eTag: res.data.ETag });
-
-      console("NEW EXPENSES", expenses);
     } catch (err) {}
   },
 
@@ -71,8 +63,6 @@ const expensesStore = create((set) => ({
     const { editExpenseForm } = expensesStore.getState();
     const { name, value } = e.target;
 
-    console.log("updating edit expense form");
-
     set((state) => {
       return {
         editExpenseForm: {
@@ -81,13 +71,9 @@ const expensesStore = create((set) => ({
         },
       };
     });
-
-    console.log(editExpenseForm);
   },
 
   initEditExpenseForm: (expense) => {
-    const { editExpenseForm } = expensesStore.getState();
-    console.log("running init", expense);
     set({
       editExpenseForm: {
         _id: expense._id,
@@ -97,7 +83,6 @@ const expensesStore = create((set) => ({
         category: expense.category,
       },
     });
-    console.log("new edit expense form", editExpenseForm);
   },
 
   editExpense: async (e) => {
@@ -107,15 +92,8 @@ const expensesStore = create((set) => ({
     } = expensesStore.getState();
     const { editExpenseForm } = expensesStore.getState();
     try {
-      console.log("NEW TITLE: ", title);
-      const res = axios.post(
-        `http://localhost:3001/api/v1/expenses/${_id}`,
-        editExpenseForm,
-        { withCredentials: true }
-      );
-
-      const updatedExpenses = expenses.filter((expense) => {
-        return expense._id !== _id;
+      const res = axios.post(`api/v1/expenses/${_id}`, editExpenseForm, {
+        withCredentials: true,
       });
 
       // update expenses
@@ -145,13 +123,9 @@ const expensesStore = create((set) => ({
     const { createExpenseForm, expenses } = expensesStore.getState();
     try {
       // fetch the expenses
-      const res = await axios.post(
-        "http://localhost:3001/api/v1/expenses",
-        createExpenseForm,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post("api/v1/expenses", createExpenseForm, {
+        withCredentials: true,
+      });
 
       // update expenses
       set({
@@ -178,12 +152,9 @@ const expensesStore = create((set) => ({
     console.log(eid);
     const { expenses } = expensesStore.getState();
     try {
-      const res = await axios.delete(
-        `http://localhost:3001/api/v1/expenses/${eid}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.delete(`api/v1/expenses/${eid}`, {
+        withCredentials: true,
+      });
 
       const updatedExpenses = expenses.filter((expense) => {
         return expense._id !== eid;

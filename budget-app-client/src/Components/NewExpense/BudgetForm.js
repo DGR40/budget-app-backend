@@ -1,7 +1,6 @@
 import "./ExpenseForm.css";
 import React, { useState } from "react";
 import expensesStore from "../../Store/expensesStore";
-import useInput from "../../Hooks/use-input";
 
 function BudgetForm({
   onSubmitCreateExpense,

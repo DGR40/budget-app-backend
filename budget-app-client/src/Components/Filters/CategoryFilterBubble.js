@@ -1,6 +1,4 @@
 import "./CategoryFilterBubble.css";
-import { useState } from "react";
-import Card from "../UI/Card";
 
 const CategoryFilterBubble = (props) => {
   function bubbleChangeHandler(event) {

@@ -1,12 +1,8 @@
 import useInput from "../Hooks/use-input";
-import { useState, useContext } from "react";
-import { redirect, Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./LoginForm.css";
-import Card from "./UI/Card.js";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../Store/auth-context";
-import { getAuthToken } from "../Utils/auth";
-import Cookies from "js-cookie";
 import authStore from "../Store/authStore.js";
 
 const isNotEmptyIsLong = (value) => value.trim() !== "" && value.length >= 6;

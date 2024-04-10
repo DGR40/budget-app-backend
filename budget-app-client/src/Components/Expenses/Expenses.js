@@ -1,27 +1,23 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Card from "../UI/Card";
 import "./Expenses.css";
 import ExpensesList from "./ExpensesList";
 import Filters from "../Filters/Filters";
-import CategoryExpenseChart from "./CategoryExpenseChart";
 import CategoryFilter from "../Filters/CategoryFilter";
 import Dashboard from "../Dashboard/Dashboard";
 import NewExpense from "../NewExpense/NewExpense";
 import MobileCategoryFilter from "../Filters/MobileCategoryFilter";
-import AuthContext from "../../Store/auth-context";
-import { getAuthToken } from "../../Utils/auth";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import expensesStore from "../../Store/expensesStore";
 import authStore from "../../Store/authStore";
 
 function Expenses({ props }) {
   const eStore = expensesStore();
-  const loggedIn = authStore().loggedIn;
+  const username = authStore().username;
 
   useEffect(() => {
     // fetch expenses
     eStore.fetchExpenses();
+
     console.log("finished fetching expenses", eStore.expenses);
   }, []);
 
@@ -39,7 +35,6 @@ function Expenses({ props }) {
 
   const [mobileCategoryFilter, setMobileCategoryFilter] = useState("All");
   const [yearMode, setYearMode] = useState(false);
-  const [seeExpenses, setSeeExpenses] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   const [expenses, setExpenses] = useState([]);
@@ -67,19 +62,15 @@ function Expenses({ props }) {
 
   function mobileCategoryFilterChangeHandler(value) {
     setMobileCategoryFilter(value);
-    setSeeExpenses(true);
   }
 
   function searchHandler(value) {
     setSearchTerm(value);
   }
 
-  function onSeeExpensesHandler() {
-    setSeeExpenses((prev) => !prev);
-  }
+  function onSeeExpensesHandler() {}
 
   function addExpenseHandler(expense) {
-    setSeeExpenses(true);
     setFilteredCategory("All");
   }
 
@@ -88,7 +79,6 @@ function Expenses({ props }) {
     setFilteredYear(new Date().getFullYear().toString());
     setFilteredCategory("All");
     setSearchTerm("");
-    setSeeExpenses(false);
     setMobileCategoryFilter("All");
   }
 
@@ -97,14 +87,12 @@ function Expenses({ props }) {
     console.log("Year mode!", selectedYear.value);
     setFilteredCategory("All");
     setSearchTerm("");
-    setSeeExpenses(false);
   }
 
   function yearWithMonthChangeHandler(selectedYear) {
     setFilteredYearWithMonth(selectedYear);
     setFilteredCategory("All");
     setSearchTerm("");
-    setSeeExpenses(false);
   }
 
   function monthlyFilterChangeHandler(selectedMonth) {
@@ -112,7 +100,6 @@ function Expenses({ props }) {
     setFilteredCategory("All");
     // setSeeExpenses(true);
     setSearchTerm("");
-    setSeeExpenses(false);
   }
 
   function categoryChangeHandler(category) {
@@ -123,7 +110,6 @@ function Expenses({ props }) {
       setFilteredCategory(category);
     }
     setSearchTerm("");
-    setSeeExpenses(true);
   }
 
   if (eStore.expenses) {
@@ -132,15 +118,12 @@ function Expenses({ props }) {
       (expense) =>
         new Date(expense.date).getFullYear().toString() ===
           filteredYearWithMonth &&
-        new Date(expense.date).toLocaleString("en-us", { month: "long" }) ==
+        new Date(expense.date).toLocaleString("en-us", { month: "long" }) ===
           filteredMonth
     );
 
-    console.log("after month filter", filteredExpenses);
-
     // if in year mode
     if (yearMode) {
-      console.log("year mode yo!");
       filteredExpenses = eStore.expenses.filter(
         (expense) =>
           new Date(expense.date).getFullYear().toString() === filteredYear
@@ -217,6 +200,7 @@ function Expenses({ props }) {
 
   return (
     <Card className="expenses">
+      <h2 className="username-text">Hello, {username}</h2>
       <NewExpense onAddExpense={addExpenseHandler} mode="add"></NewExpense>
       <Filters
         onYearlyFilterChange={filterChangeHandler}
@@ -255,7 +239,8 @@ function Expenses({ props }) {
       )}
       <Card
         className={`expense-list-card ${
-          filteredExpenses.length == 0 || filteredExpensesOfCategory.length == 0
+          filteredExpenses.length === 0 ||
+          filteredExpensesOfCategory.length == 0
             ? "justify-center"
             : ""
         }`}

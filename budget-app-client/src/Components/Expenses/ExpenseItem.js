@@ -4,7 +4,7 @@ import Card from "../UI/Card";
 import expensesStore from "../../Store/expensesStore";
 import ExpenseForm from "../NewExpense/ExpenseForm";
 import { useState } from "react";
-import { faArrowDown, faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ExpenseItem({ eid, date, title, amount, category, expense }) {

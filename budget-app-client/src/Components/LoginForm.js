@@ -1,16 +1,13 @@
 import useInput from "../Hooks/use-input";
-import { useState, useContext, useEffect } from "react";
-import { useHistory, useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "./LoginForm.css";
-import { getAuthToken } from "../Utils/auth";
-import Cookies from "js-cookie";
 import authStore from "../Store/authStore";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
 
 function LoginForm() {
-  const token = getAuthToken();
   const navigate = useNavigate();
 
   const store = authStore();

@@ -37,3 +37,10 @@
   align-items: center;
   color: white;
 }
+.username-text {
+  color: white;
+  padding: none;
+  margin-top: 0px;
+  text-align: center;
+  text-decoration: underline;
+}

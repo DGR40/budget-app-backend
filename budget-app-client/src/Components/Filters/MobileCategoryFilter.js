@@ -1,4 +1,3 @@
-import Card from "../UI/Card";
 import "./MobileCategoryFilter.css";
 
 const MobileCategoryFilter = (props) => {

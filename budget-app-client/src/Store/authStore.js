@@ -5,6 +5,7 @@ axios.defaults.withCredentials = true;
 
 const authStore = create((set) => ({
   loggedIn: null,
+  username: null,
   loginForm: {
     email: "",
     password: "",
@@ -56,10 +57,18 @@ const authStore = create((set) => ({
         }
       );
 
+      console.log("getting name");
+      try {
+        const user = await axios.get("http://localhost:3001/api/v1/auth/me");
+        set({ username: user.data.data.name });
+      } catch (err) {
+        console.log("failed to get name");
+      }
+
       set({ loggedIn: true });
       set({ token: res.data.token });
 
-      console.log("logged in user");
+      console.log("logged in user", res.data.name);
     } catch (err) {
       set({ loggedIn: false });
       console.log("failed to log in");
@@ -99,12 +108,14 @@ const authStore = create((set) => ({
     const { token } = authStore.getState();
     try {
       console.log("trying to auth");
-      await axios.get("http://localhost:3001/api/v1/auth/me", {
+      const res = await axios.get("http://localhost:3001/api/v1/auth/me", {
         withCredentials: true,
         // Authorization: `Bearer ${token}`,
       });
       set({ loggedIn: true });
-      console.log("logged in!");
+
+      set({ username: res.data.data.name });
+      console.log("logged in!", res.data.data.name);
     } catch (err) {
       console.log("could not find user");
       set({ loggedIn: false });
