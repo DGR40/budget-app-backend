@@ -24,6 +24,11 @@
     "web-vitals": "^2.1.4",
     "zustand": "^4.5.2"
   },
+  "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
