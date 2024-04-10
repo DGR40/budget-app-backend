@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import SignUpForm from "../Components/SignUpForm";
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:3001/";
 
 const authStore = create((set) => ({
   loggedIn: null,
@@ -49,17 +50,13 @@ const authStore = create((set) => ({
     const { loginForm } = authStore.getState();
 
     try {
-      const res = await axios.post(
-        "http://localhost:3001/api/v1/auth/login",
-        loginForm,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post("api/v1/auth/login", loginForm, {
+        withCredentials: true,
+      });
 
       console.log("getting name");
       try {
-        const user = await axios.get("http://localhost:3001/api/v1/auth/me");
+        const user = await axios.get("api/v1/auth/me");
         set({ username: user.data.data.name });
       } catch (err) {
         console.log("failed to get name");
