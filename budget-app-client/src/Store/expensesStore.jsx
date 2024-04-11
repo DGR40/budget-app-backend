@@ -33,7 +33,6 @@ const expensesStore = create((set) => ({
       const res = await axios.get("api/v1/expenses", {
         withCredentials: true,
         "Content-Type": "json",
-        "Cache-Control": "no-cache",
         "If-None-Match": eTag,
       });
 

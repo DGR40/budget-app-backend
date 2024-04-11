@@ -1,6 +1,6 @@
-import CategoryFilterBubble from "./CategoryFilterBubble.js";
+import CategoryFilterBubble from "./CategoryFilterBubble";
 import "./CategoryFilter.css";
-import Card from "../UI/Card.js";
+import Card from "../UI/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";

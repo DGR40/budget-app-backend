@@ -1,7 +1,7 @@
 import { useNavigate, Navigate } from "react-router-dom";
-import LoginForm from "../Components/LoginForm.js";
-import Header from "../Components/UI/Header.js";
-import authStore from "../Store/authStore.js";
+import LoginForm from "../Components/LoginForm";
+import Header from "../Components/UI/Header";
+import authStore from "../Store/authStore";
 
 function LogInPage() {
   const store = authStore();

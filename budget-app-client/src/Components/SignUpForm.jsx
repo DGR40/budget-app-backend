@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
-import authStore from "../Store/authStore.js";
+import authStore from "../Store/authStore";
 
 const isNotEmptyIsLong = (value) => value.trim() !== "" && value.length >= 6;
 const isNotEmpty = (value) => value.trim() !== "";
