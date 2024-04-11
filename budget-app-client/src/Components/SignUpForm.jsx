@@ -13,7 +13,7 @@ function SignUpForm() {
   const store = authStore();
 
   const navigate = useNavigate();
-  const goToExpenses = () => navigate("/expenses");
+  const goToExpenses = () => navigate("/");
 
   const [signupFailed, setSignupFailed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

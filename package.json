@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node server",
     "dev": "nodemon server",
-    "build": "npm install && npm install --prefix budget-app-client && npm run build --prefix budget-app-client"
+    "build": "npm install"
   },
   "author": "Danny Rusk",
   "license": "ISC",
