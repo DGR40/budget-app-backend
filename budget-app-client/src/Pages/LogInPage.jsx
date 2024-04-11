@@ -7,7 +7,7 @@ function LogInPage() {
   const store = authStore();
 
   if (store.loggedIn) {
-    return <Navigate to="/expenses" />;
+    return <Navigate to="/" />;
   }
 
   return (

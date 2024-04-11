@@ -25,6 +25,8 @@ const users = require("./routes/users");
 
 const app = express();
 
+app.use(express.static("./dist"));
+
 // Body parser
 app.use(express.json());
 // Cookie parser

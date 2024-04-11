@@ -40,7 +40,7 @@ function LoginForm() {
   const submitHandler = async (e) => {
     e.preventDefault();
     await store.login();
-    navigate("/expenses");
+    navigate("/");
   };
 
   const passwordClasses = passwordHasError

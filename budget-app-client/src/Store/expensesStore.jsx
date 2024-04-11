@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3001/";
 
 const expensesStore = create((set) => ({
   expenses: null,

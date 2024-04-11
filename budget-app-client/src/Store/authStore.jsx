@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import SignUpForm from "../Components/SignUpForm";
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "http://localhost:3001/";
 
 const authStore = create((set) => ({
   loggedIn: null,
@@ -74,7 +72,7 @@ const authStore = create((set) => ({
 
   logout: async (e) => {
     try {
-      const res = await axios.get("http://localhost:3001/api/v1/auth/logout", {
+      const res = await axios.get("/api/v1/auth/logout", {
         withCredentials: true,
       });
       set({ loggedIn: false });
@@ -87,13 +85,9 @@ const authStore = create((set) => ({
     e.preventDefault();
     const { signupForm } = authStore.getState();
     try {
-      const res = await axios.post(
-        "http://localhost:3001/api/v1/auth/register",
-        signupForm,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post("api/v1/auth/register", signupForm, {
+        withCredentials: true,
+      });
       set({ loggedIn: true });
     } catch (err) {
       console.log("failed to sign up");
@@ -105,7 +99,7 @@ const authStore = create((set) => ({
     const { token } = authStore.getState();
     try {
       console.log("trying to auth");
-      const res = await axios.get("http://localhost:3001/api/v1/auth/me", {
+      const res = await axios.get("api/v1/auth/me", {
         withCredentials: true,
         // Authorization: `Bearer ${token}`,
       });
