@@ -2,7 +2,7 @@ import useInput from "../Hooks/use-input";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import authStore from "../Store/authStore";
 
 const isNotEmptyIsLong = (value) => value.trim() !== "" && value.length >= 6;
@@ -11,6 +11,8 @@ const isEmail = (value) => value.includes("@");
 
 function SignUpForm() {
   const store = authStore();
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
   const goToExpenses = () => navigate("/");
@@ -52,7 +54,20 @@ function SignUpForm() {
 
   const submitHandler = async (e) => {
     await store.signup(e);
-    goToExpenses();
+
+    console.log("frontend error: ", store.signUpError);
+
+    if (store.loggedIn) {
+      console.log("go to expenses");
+      goToExpenses();
+    } else {
+      setErrorMessage(store.signUpError);
+    }
+
+    // clear the inputs
+    resetName();
+    resetEmail();
+    resetPassword();
   };
 
   const passwordClasses = passwordHasError
@@ -123,6 +138,9 @@ function SignUpForm() {
           <p className="error-text">
             Please enter a password longer than 5 characters
           </p>
+        )}
+        {errorMessage.length > 0 && (
+          <p className="error-text">{errorMessage}</p>
         )}
         <div className="form-actions">
           <button

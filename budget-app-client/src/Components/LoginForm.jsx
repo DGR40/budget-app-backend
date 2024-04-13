@@ -12,6 +12,8 @@ function LoginForm() {
 
   const store = authStore();
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
   const {
     value: emailValue,
@@ -40,7 +42,12 @@ function LoginForm() {
   const submitHandler = async (e) => {
     e.preventDefault();
     await store.login();
-    navigate("/");
+    if (!store.loggedIn) {
+      console.log("fe not logged in");
+      setErrorMessage("Invalid email or password");
+    } else {
+      navigate("/");
+    }
   };
 
   const passwordClasses = passwordHasError
@@ -85,6 +92,9 @@ function LoginForm() {
         </div>
         {passwordHasError && (
           <p className="error-text">Please enter a password</p>
+        )}
+        {errorMessage.length > 0 && (
+          <p className="error-text">{errorMessage}</p>
         )}
         <div className="form-actions">
           <button

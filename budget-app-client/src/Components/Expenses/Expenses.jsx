@@ -12,12 +12,13 @@ import authStore from "../../Store/authStore";
 
 function Expenses({ props }) {
   const eStore = expensesStore();
+  const aStore = authStore();
   const username = authStore().username;
 
   useEffect(() => {
     // fetch expenses
+    aStore.checkAuth();
     eStore.fetchExpenses();
-
     console.log("finished fetching expenses", eStore.expenses);
   }, []);
 

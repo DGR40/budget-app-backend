@@ -108,12 +108,9 @@ function CategoryFilter(props) {
                       component="div"
                       color="white"
                       fontSize={"1rem"}
-                      fontWeight={"1000"}
+                      fontWeight={"500"}
                     >
-                      {chartCategoryData[c] > 1
-                        ? "100"
-                        : Math.round(chartCategoryData[c] * 100, 3)}
-                      %
+                      {`${Math.round(chartCategoryData[c] * 100, 3)}%`}
                     </Typography>
                   </Box>
                 </div>

@@ -16,6 +16,7 @@ function ExpenseForm({
   const [categoryValid, setCategoryValid] = useState(true);
 
   const isNotEmpty = (value) => value.trim() !== "";
+  const isTooLong = (value) => value.length >= 30;
 
   const eStore = expensesStore();
 
@@ -37,7 +38,7 @@ function ExpenseForm({
 
     console.log("FC: ", form.category);
 
-    if (!form.title) {
+    if (!form.title || isTooLong(form.title)) {
       console.log("title blank!");
       setTitleValid(false);
       formValid = false;
@@ -94,7 +95,7 @@ function ExpenseForm({
     >
       <div className="new-expense__controls">
         <div className="new-expense__control">
-          <label>Title</label>
+          <label>Title (max 30 char)</label>
           <input
             type="text"
             name="title"
@@ -106,6 +107,7 @@ function ExpenseForm({
                 eStore.updateEditExpenseForm(e);
               }
             }}
+            maxLength="30"
             placeholder="Ex: New TV"
             className={mode === "add" && "add-form-input"}
           />
