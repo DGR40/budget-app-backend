@@ -4,7 +4,7 @@ axios.defaults.withCredentials = true;
 
 const authStore = create((set) => ({
   loggedIn: null,
-  signUpError: "",
+  signupError: "",
   loginError: "",
   username: null,
   loginForm: {
@@ -45,8 +45,6 @@ const authStore = create((set) => ({
   },
 
   login: async (e) => {
-    console.log(axios.defaults.headers);
-
     const { loginForm } = authStore.getState();
 
     try {
@@ -76,20 +74,19 @@ const authStore = create((set) => ({
   },
 
   signup: async (e) => {
-    set({ signUpError: "" });
     e.preventDefault();
     const { signupForm } = authStore.getState();
     try {
       const res = await axios.post("api/v1/auth/register", signupForm, {
         withCredentials: true,
       });
-
-      // if successful
+      console.log("signed up new user", res.data.name);
+      set({ signupError: "" });
       set({ loggedIn: true });
     } catch (err) {
-      set({ loggedIn: false });
-      set({ signUpError: err.response.data.error });
-      console.log(err.response.data.error);
+      set({
+        signupError: err.response.data.error,
+      });
     }
   },
 

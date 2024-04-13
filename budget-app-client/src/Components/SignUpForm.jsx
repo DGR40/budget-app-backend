@@ -53,15 +53,13 @@ function SignUpForm() {
   }
 
   const submitHandler = async (e) => {
-    await store.signup(e);
+    const res = await store.signup(e);
 
-    console.log("frontend error: ", store.signUpError);
-
-    if (store.loggedIn) {
-      console.log("go to expenses");
-      goToExpenses();
+    if (!store.loggedIn) {
+      console.log("frontend error: ", store.signupError);
+      setErrorMessage(store.signupError);
     } else {
-      setErrorMessage(store.signUpError);
+      goToExpenses();
     }
 
     // clear the inputs
@@ -93,6 +91,7 @@ function SignUpForm() {
               store.updateSignupForm(e);
             }}
             onBlur={nameBlurHandler}
+            autocapitalize="off"
           />
         </div>
         {nameHasError && <p className="error-text">Please enter your name</p>}
@@ -109,6 +108,7 @@ function SignUpForm() {
               store.updateSignupForm(e);
             }}
             onBlur={emailBlurHandler}
+            autocapitalize="off"
           />
         </div>
         {emailHasError && (
@@ -132,6 +132,7 @@ function SignUpForm() {
               store.updateSignupForm(e);
             }}
             onBlur={passwordBlurHandler}
+            autocapitalize="off"
           />
         </div>
         {passwordHasError && (
@@ -139,8 +140,8 @@ function SignUpForm() {
             Please enter a password longer than 5 characters
           </p>
         )}
-        {errorMessage.length > 0 && (
-          <p className="error-text">{errorMessage}</p>
+        {store.signupError.length > 0 && (
+          <p className="error-text">{store.signupError}</p>
         )}
         <div className="form-actions">
           <button
