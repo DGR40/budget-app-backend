@@ -7,8 +7,8 @@ const Header = (props) => {
   const store = authStore();
   const navigate = useNavigate();
 
-  function logoutHandler() {
-    store.logout();
+  async function logoutHandler() {
+    await store.logout();
     navigate("/login");
   }
 
