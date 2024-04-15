@@ -1,11 +1,17 @@
 import "./NewExpense.css";
 import ExpenseForm from "./ExpenseForm";
 import { useState } from "react";
-import expensesStore from "../../Store/expensesStore";
+import authStore from "../../Store/authStore";
+import { useNavigate } from "react-router-dom";
 
 function NewExpense(props) {
-  const eStore = expensesStore.getState();
+  const aStore = authStore();
+  const navigate = useNavigate();
   const [addExpenseShowing, setAddExpenseShowing] = useState(false);
+
+  async function logoutHandler() {
+    await aStore.logout();
+  }
 
   function onSubmitExpenseHandler(enteredData) {
     setAddExpenseShowing(false);
@@ -20,22 +26,41 @@ function NewExpense(props) {
   }
 
   let toolBar = (
-    <button className="new-expense-button" onClick={onAddExpenseHandler}>
-      Add Expense
-    </button>
+    <>
+      <p className="toolbar-button" onClick={logoutHandler}>
+        Logout
+      </p>
+      <button className="new-expense-button" onClick={onAddExpenseHandler}>
+        Add Expense
+      </button>
+      <p
+        className="toolbar-button"
+        onClick={() => {
+          navigate("/settings");
+        }}
+      >
+        Settings
+      </p>
+    </>
   );
 
   if (addExpenseShowing) {
     toolBar = (
-      <ExpenseForm
-        onSubmitCreateExpense={onSubmitExpenseHandler}
-        onClearExpense={onClearExpenseHandler}
-        mode={props.mode}
-      />
+      <>
+        <ExpenseForm
+          onSubmitCreateExpense={onSubmitExpenseHandler}
+          onClearExpense={onClearExpenseHandler}
+          mode={props.mode}
+        />
+      </>
     );
   }
 
-  return <div className="new-expense">{toolBar}</div>;
+  return (
+    <div className={`new-expense ${addExpenseShowing && "justify-center"}`}>
+      {toolBar}
+    </div>
+  );
 }
 
 export default NewExpense;

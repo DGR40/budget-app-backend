@@ -31,6 +31,11 @@ exports.register = asyncHandler(async (req, res, next) => {
       password,
       role,
       firstLogIn: true,
+      foodAndDrink: 200,
+      shopping: 200,
+      entertainment: 200,
+      rent: 2000,
+      misc: 200,
     });
     // if user creation was correct
     sendTokenResponse(user, 200, res);
@@ -106,13 +111,21 @@ exports.logout = asyncHandler(async (req, res, next) => {
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   const fieldsToUpdate = {
     name: req.body.name,
-    email: req.body.email,
+    foodAndDrink: req.body.foodAndDrink,
+    shopping: req.body.shopping,
+    entertainment: req.body.entertainment,
+    rent: req.body.rent,
+    misc: req.body.misc,
   };
 
   const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
     new: true,
     runValidators: true,
   });
+
+  if (!user) {
+    return next(new ErrorResponse("Failed to update", 401));
+  }
 
   res.status(200).json({
     success: true,

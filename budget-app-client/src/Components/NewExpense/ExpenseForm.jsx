@@ -1,7 +1,12 @@
 import "./ExpenseForm.css";
 import React, { useState } from "react";
 import expensesStore from "../../Store/expensesStore";
-import { faTrash, faCheck, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faCheck,
+  faArrowUp,
+  faSave,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ExpenseForm({
@@ -91,11 +96,12 @@ function ExpenseForm({
   return (
     <form
       onSubmit={submitHandler}
-      className={mode === "edit" ? "edit-form" : ""}
+      className={mode === "edit" ? "edit-form" : "add-form"}
     >
       <div className="new-expense__controls">
-        <div className="new-expense__control">
-          <label>Title (max 30 char)</label>
+        <h1>{mode === "edit" ? "Edit Expense" : "Add Expense"}</h1>
+        <div className="settings__control">
+          <label className="settings__label">Title (max 30 char)</label>
           <input
             type="text"
             name="title"
@@ -109,14 +115,14 @@ function ExpenseForm({
             }}
             maxLength="30"
             placeholder="Ex: New TV"
-            className={mode === "add" && "add-form-input"}
+            className={`settings__input ${!titleValid && "invalid-setting"}`}
           />
           {!titleValid && (
             <label className="error-text">Please enter a title...</label>
           )}
         </div>
-        <div className="new-expense__control">
-          <label>Amount</label>
+        <div className="settings__control">
+          <label className="settings__label">Amount</label>
           <input
             type="number"
             name="amount"
@@ -131,14 +137,14 @@ function ExpenseForm({
               }
             }}
             placeholder="200"
-            className={mode === "add" ? "add-form-input" : ""}
+            className={`settings__input ${!amountValid && "invalid-setting"}`}
           />
           {!amountValid && (
             <label className="error-text">Please enter an amount...</label>
           )}
         </div>
-        <div className="new-expense__control">
-          <label>Date</label>
+        <div className="settings__control">
+          <label className="settings__label">Date</label>
           <input
             type="date"
             value={getDateForDatePicker(form.date)}
@@ -152,12 +158,12 @@ function ExpenseForm({
                 eStore.updateEditExpenseForm(e);
               }
             }}
-            className={mode === "add" && "add-form-input"}
+            className={`settings__input`}
             placeholder="today"
           />
         </div>
-        <div className="new-expense__control">
-          <label>Category</label>
+        <div className="settings__control">
+          <label className="settings__label">Category</label>
           <select
             name="category"
             onChange={(e) => {
@@ -168,7 +174,7 @@ function ExpenseForm({
               }
             }}
             value={form.category}
-            className={mode === "add" && "add-form-input"}
+            className={`settings__input ${!categoryValid && "invalid-setting"}`}
           >
             <option value="Pick">Choose a category below</option>
             <option value="Food and Drink">Food and Drink</option>
@@ -208,7 +214,7 @@ function ExpenseForm({
             <FontAwesomeIcon icon={faTrash} />
           </button>
           <button type="submit" className="new-expense-button">
-            <FontAwesomeIcon icon={faCheck} />
+            <FontAwesomeIcon icon={faSave} />
           </button>
         </div>
       )}

@@ -31,9 +31,13 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  firstLogIn: {
-    type: Boolean,
-  },
+  firstLogIn: { type: Boolean },
+  foodAndDrink: { type: Number },
+  shopping: { type: Number },
+  entertainment: { type: Number },
+  rent: { type: Number },
+  subscriptions: { type: Number },
+  misc: { type: Number },
 });
 
 // Encrypt password using bcrypt

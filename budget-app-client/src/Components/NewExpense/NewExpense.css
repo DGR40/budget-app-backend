@@ -1,9 +1,25 @@
+.invalid-setting {
+  border: 1px solid red !important;
+}
+
+.add-form {
+  width: 100%;
+}
+
+.justify-center {
+  flex-direction: column !important;
+}
+
 .new-expense {
   background-color: rgb(255, 255, 255, 0.1);
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 12px;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: white;
 }
 
 .new-expense-button {
@@ -30,4 +46,12 @@
 .new-expense button.alternative:hover,
 .new-expense button.alternative:active {
   background-color: #ddb3f8;
+}
+
+.toolbar-button {
+  cursor: pointer;
+}
+
+.toolbar-button:hover {
+  color: #ccc;
 }

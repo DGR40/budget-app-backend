@@ -69,18 +69,19 @@
   border-width: 0px;
   padding: 1rem;
   cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  transition: all 0.5s ease-in;
 }
 
 .error-text {
-  border: 1px solid red;
   width: fit-content;
-  padding: 0.25rem;
   border-radius: 12px;
+  color: red;
 }
 
 button.invalid {
   background-color: rgb(31, 31, 31);
   border: 1px solid #a892ee;
-  transition: "background-color" 1s ease-out;
   cursor: default;
 }

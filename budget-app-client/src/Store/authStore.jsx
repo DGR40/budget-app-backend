@@ -4,8 +4,11 @@ axios.defaults.withCredentials = true;
 
 const authStore = create((set) => ({
   loggedIn: null,
+  activePage: "login",
   signupError: "",
   loginError: "",
+  updateUserError: "",
+  user: null,
   username: null,
   loginForm: {
     email: "",
@@ -16,6 +19,14 @@ const authStore = create((set) => ({
     email: "",
     password: "",
     role: "user",
+  },
+  userForm: {
+    name: "auth init",
+    foodAndDrink: 0,
+    shopping: 0,
+    entertainment: 0,
+    rent: 0,
+    misc: 0,
   },
 
   updateSignupForm: (e) => {
@@ -44,6 +55,56 @@ const authStore = create((set) => ({
     });
   },
 
+  initUpdateUserForm: (user) => {
+    const { userForm } = authStore.getState();
+    set({
+      userForm: {
+        name: user.name,
+        foodAndDrink: user.foodAndDrink,
+        shopping: user.shopping,
+        entertainment: user.entertainment,
+        rent: user.rent,
+        misc: user.misc,
+      },
+    });
+
+    console.log(userForm);
+  },
+
+  updateUserForm: (e) => {
+    const { userForm } = authStore.getState();
+    const { name, value } = e.target;
+
+    console.log(name, value);
+
+    set((state) => {
+      return {
+        userForm: {
+          ...state.userForm,
+          [name]: value,
+        },
+      };
+    });
+
+    console.log(userForm);
+  },
+
+  updateUser: async (e) => {
+    const { userForm } = authStore.getState();
+    try {
+      const res = await axios.put("api/v1/auth/updateDetails", userForm, {
+        withCredentials: true,
+      });
+      set((state) => {
+        return {
+          user: { ...state.user, userForm },
+        };
+      });
+    } catch (err) {
+      set({ updateUserError: err.response.data.error });
+    }
+  },
+
   login: async (e) => {
     const { loginForm } = authStore.getState();
 
@@ -53,6 +114,7 @@ const authStore = create((set) => ({
       });
       set({ loggedIn: true });
       set({ token: res.data.token });
+      set({ activePage: "expenses" });
 
       console.log("logged in user", res.data.name);
     } catch (err) {
@@ -68,6 +130,7 @@ const authStore = create((set) => ({
         withCredentials: true,
       });
       set({ loggedIn: false });
+      set({ activePage: "login" });
     } catch (err) {
       console.log(err);
     }
@@ -91,16 +154,14 @@ const authStore = create((set) => ({
   },
 
   checkAuth: async (e) => {
-    const { token } = authStore.getState();
+    const { user } = authStore.getState();
     try {
       console.log("trying to auth");
       const res = await axios.get("api/v1/auth/me", {
         withCredentials: true,
-        // Authorization: `Bearer ${token}`,
       });
-      set({ loggedIn: true });
-      set({ username: res.data.data.name });
-      console.log("logged in!", res.data.data.name);
+      set({ loggedIn: true, user: { ...res.data.data } });
+      console.log("current user", user);
     } catch (err) {
       console.log("could not find user");
       set({ loggedIn: false });

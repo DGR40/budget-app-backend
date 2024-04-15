@@ -24,7 +24,7 @@ export default function RequireAuth({ children }) {
   }
 
   if (store.loggedIn) {
-    if (store.username == "") {
+    if (store.username === "") {
       store.checkAuth();
     }
     return <div>{children}</div>;

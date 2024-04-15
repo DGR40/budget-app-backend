@@ -1,0 +1,100 @@
+.back-button {
+  float: left;
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.back-button:hover {
+  color: #a892ee;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-header-section {
+  flex: 1;
+  text-align: center;
+  margin: 0px;
+}
+
+.form-header {
+  flex-direction: row;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.settings__label {
+  position: absolute;
+  top: -13px;
+  left: 10px;
+  padding: 0px 6px;
+  background-color: rgb(59, 59, 59);
+}
+
+.settings__control {
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  flex-direction: column;
+}
+
+.settings-confirm-button {
+  font: inherit;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  width: 100%;
+  margin: auto;
+  color: #220131;
+  border-radius: 8px;
+  border: none;
+}
+
+.settings-confirm-button:hover {
+  filter: brightness(1.2);
+}
+.settings__input {
+  padding-left: 2rem;
+  font: inherit;
+  padding: 1rem;
+  padding-left: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  flex: 1;
+  background-color: transparent;
+  color: white;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.settings-form {
+  color: #ccc;
+  background-color: rgb(255, 255, 255, 0.1);
+  padding: 1rem;
+  padding-top: 0.5rem;
+  margin: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  width: 50rem;
+  margin: 2rem auto;
+  max-width: 95%;
+}
+.settings-form > h1 {
+  color: white;
+}
