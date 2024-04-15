@@ -143,7 +143,7 @@ function SettingsForm({}) {
       </div>
       <div className={"new-expense__actions_edit"}>
         <button type="submit" className="settings-confirm-button">
-          SAVE
+          Save
         </button>
       </div>
     </form>
