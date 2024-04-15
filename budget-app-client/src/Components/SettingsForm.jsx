@@ -39,6 +39,19 @@ function SettingsForm({}) {
 
   console.log("user", aStore.user);
 
+  let USDollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+  const total = USDollar.format(
+    Number(aStore.userForm.foodAndDrink) +
+      Number(aStore.userForm.shopping) +
+      Number(aStore.userForm.entertainment) +
+      Number(aStore.userForm.rent) +
+      Number(aStore.userForm.misc)
+  );
+
   // init form values
   useEffect(() => {
     console.log("initializing user form", aStore.user);
@@ -91,7 +104,7 @@ function SettingsForm({}) {
   return (
     <form onSubmit={submitHandler} className="settings-form">
       <h1>Settings</h1>
-      <div className="new-expense__controls settings__controls">
+      <div className="settings__controls">
         <SettingsControl
           label="Name"
           type="text"
@@ -141,11 +154,25 @@ function SettingsForm({}) {
           errorMessage={"Please enter a non-negative dollar amount"}
         />
       </div>
-      <div className={"new-expense__actions_edit"}>
-        <button type="submit" className="settings-confirm-button">
+      <p className="budget-total">
+        Total Monthly Budget: <span className="bold">{total}</span>
+      </p>
+      <hr />
+      <div className={"settings__actions"}>
+        <button type="submit" className="settings-button green">
           Save
         </button>
+        <button
+          className="settings-button"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Cancel
+        </button>
       </div>
+      <hr />
+      <button className="settings-button red">Logout</button>
     </form>
   );
 }

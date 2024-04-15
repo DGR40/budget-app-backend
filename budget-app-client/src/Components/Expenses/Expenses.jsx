@@ -201,7 +201,9 @@ function Expenses({ props }) {
 
   return (
     <Card className="expenses">
-      <h2 className="username-text">Hello, {aStore.user.name}</h2>
+      <h2 className="username-text">
+        Hello, <span className="bold light-purple">{aStore.user.name}</span>
+      </h2>
       <NewExpense onAddExpense={addExpenseHandler} mode="add"></NewExpense>
       <Filters
         onYearlyFilterChange={filterChangeHandler}

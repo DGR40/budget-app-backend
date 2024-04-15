@@ -20,6 +20,7 @@
   flex-direction: row;
   justify-content: space-between;
   color: white;
+  gap: 1rem;
 }
 
 .new-expense-button {
@@ -30,6 +31,10 @@
   color: #40005d;
   border-radius: 8px;
   border: none;
+}
+
+#add-button {
+  width: 50%;
 }
 
 .new-expense button:hover,
@@ -50,8 +55,10 @@
 
 .toolbar-button {
   cursor: pointer;
-}
-
-.toolbar-button:hover {
+  width: 50%;
+  background-color: rgb(97, 97, 97);
   color: #ccc;
+  border-radius: 8px;
+  border: none;
+  font: inherit;
 }

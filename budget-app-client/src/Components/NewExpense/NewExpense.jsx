@@ -27,20 +27,21 @@ function NewExpense(props) {
 
   let toolBar = (
     <>
-      <p className="toolbar-button" onClick={logoutHandler}>
-        Logout
-      </p>
-      <button className="new-expense-button" onClick={onAddExpenseHandler}>
+      <button
+        className="new-expense-button"
+        id="add-button"
+        onClick={onAddExpenseHandler}
+      >
         Add Expense
       </button>
-      <p
+      <button
         className="toolbar-button"
         onClick={() => {
           navigate("/settings");
         }}
       >
         Settings
-      </p>
+      </button>
     </>
   );
 

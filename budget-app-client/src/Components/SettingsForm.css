@@ -53,19 +53,38 @@
   flex-direction: column;
 }
 
-.settings-confirm-button {
+.bold {
+  font-weight: 1000;
+}
+
+.settings__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.settings-button {
   font: inherit;
   cursor: pointer;
   padding: 1rem 2rem;
   width: 100%;
-  margin: auto;
   color: #220131;
   border-radius: 8px;
   border: none;
 }
 
-.settings-confirm-button:hover {
+.settings-button:hover {
   filter: brightness(1.2);
+}
+
+#settings-cancel {
+}
+
+.settings__actions {
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+  justify-content: space-evenly;
 }
 .settings__input {
   padding-left: 2rem;
@@ -80,6 +99,11 @@
   font-weight: 700;
   width: 100%;
   margin-bottom: 4px;
+}
+
+.budget-total {
+  text-align: left;
+  margin-top: 0px;
 }
 
 .settings-form {
