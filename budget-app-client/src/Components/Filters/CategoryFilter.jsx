@@ -4,15 +4,17 @@ import Card from "../UI/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import authStore from "./../../Store/authStore";
 
 function CategoryFilter(props) {
+  const aStore = authStore();
+
   const categories = [
     "Food and Drink",
     "Shopping",
     "Entertainment",
     "Rent",
-    "Subscriptions",
-    "Transportation",
+    "Other",
   ];
 
   function categoryChangeHandler(value) {
@@ -28,15 +30,12 @@ function CategoryFilter(props) {
     }
   }
 
-  console.log(props.selectedCategory);
-
   const chartCategoryData = {
     "Food and Drink": 0,
     Shopping: 0,
     Entertainment: 0,
     Rent: 0,
-    Subscriptions: 0,
-    Transportation: 0,
+    Other: 0,
   };
 
   for (const expense of props.expenses) {
@@ -44,10 +43,40 @@ function CategoryFilter(props) {
     chartCategoryData[expenseCategory] += expense.amount;
   }
 
-  for (const c in chartCategoryData) {
-    chartCategoryData[c] = chartCategoryData[c] / props.budgetDict[c];
+  console.log("category totals", chartCategoryData);
+
+  const budgetData = {
+    "Food and Drink":
+      chartCategoryData["Food and Drink"] / aStore.user.foodAndDrink,
+    Shopping: chartCategoryData["Shopping"] / aStore.user.shopping,
+    Entertainment:
+      chartCategoryData["Entertainment"] / aStore.user.entertainment,
+    Rent: chartCategoryData["Rent"] / aStore.user.rent,
+    Other: chartCategoryData["Other"] / aStore.user.misc,
+  };
+
+  const budgetDataYearly = {
+    "Food and Drink":
+      chartCategoryData["Food and Drink"] / (aStore.user.foodAndDrink * 12),
+    Shopping: chartCategoryData["Shopping"] / (aStore.user.shopping * 12),
+    Entertainment:
+      chartCategoryData["Entertainment"] / (aStore.user.entertainment * 12),
+    Rent: chartCategoryData["Rent"] / (aStore.user.rent * 12),
+    Other: chartCategoryData["Other"] / (aStore.user.misc * 12),
+  };
+
+  console.log(budgetData, "props selected", budgetDataYearly);
+
+  function getPercent(c) {
+    console.log("YEAR MODE", props.yearMode);
+    if (props.yearMode) {
+      return budgetDataYearly[c] >= 1
+        ? 100
+        : Math.round(budgetDataYearly[c] * 100, 3);
+    } else {
+      return budgetData[c] >= 1 ? 100 : Math.round(budgetData[c] * 100, 3);
+    }
   }
-  console.log(props.selectedCategory, "props selected");
 
   return (
     <Card>
@@ -71,17 +100,11 @@ function CategoryFilter(props) {
                 <div className="circle-container">
                   <CircularProgress
                     variant="determinate"
-                    value={
-                      chartCategoryData[c] >= 1
-                        ? 100
-                        : Math.round(chartCategoryData[c] * 100, 2)
-                    }
+                    value={getPercent(c)}
                     size={"6rem"}
                     sx={{
                       "& .MuiCircularProgress-circle": {
-                        stroke: `${
-                          chartCategoryData[c] > 1 ? "#ff6962" : "#77dd78"
-                        }`,
+                        stroke: `${budgetData[c] > 1 ? "#ff6962" : "#77dd78"}`,
                         strokeWidth: "4px",
                         position: "relative",
                         fill: "rgb(255,255,255,0.1)",
@@ -110,7 +133,7 @@ function CategoryFilter(props) {
                       fontSize={"1rem"}
                       fontWeight={"500"}
                     >
-                      {`${Math.round(chartCategoryData[c] * 100, 3)}%`}
+                      {`${getPercent(c)}%`}
                     </Typography>
                   </Box>
                 </div>

@@ -1,18 +1,19 @@
-import ExpenseFilter from './ExpenseFilter';
-import MonthlyExpenseFilter from './MonthlyExpenseFilter'
+import ExpenseFilter from "./ExpenseFilter";
+import MonthlyExpenseFilter from "./MonthlyExpenseFilter";
 
-const Filters (props) => {
+const Filters = (props) => {
   return (
     <div>
-   <ExpenseFilter
+      <ExpenseFilter
         onChangeFilter={props.filterChangeHandler}
         selected={props.filteredYear}
+        yearMode={props.yearMode}
       />
-    <MonthlyExpenseFilter
+      <MonthlyExpenseFilter
         onMonthlyFilterChange={props.monthlyFilterChangeHandler}
-    />
-  </div>)
-   
-}
+      />
+    </div>
+  );
+};
 
-export default Filters
+export default Filters;

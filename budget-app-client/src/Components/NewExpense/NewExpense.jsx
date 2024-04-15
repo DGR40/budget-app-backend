@@ -2,10 +2,12 @@ import "./NewExpense.css";
 import ExpenseForm from "./ExpenseForm";
 import { useState } from "react";
 import authStore from "../../Store/authStore";
+import expensesStore from "../../Store/expensesStore";
 import { useNavigate } from "react-router-dom";
 
 function NewExpense(props) {
   const aStore = authStore();
+  const eStore = expensesStore();
   const navigate = useNavigate();
   const [addExpenseShowing, setAddExpenseShowing] = useState(false);
 
@@ -22,7 +24,10 @@ function NewExpense(props) {
   }
 
   function onAddExpenseHandler() {
-    setAddExpenseShowing(true);
+    if (!eStore.isEditing) {
+      setAddExpenseShowing(true);
+      eStore.setIsEditing(true);
+    }
   }
 
   let toolBar = (

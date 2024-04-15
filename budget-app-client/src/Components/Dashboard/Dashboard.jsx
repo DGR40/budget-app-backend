@@ -6,10 +6,18 @@ const Dashboard = (props) => {
 
   let maxBudget = 0;
 
-  if (props.selectedCategory !== "All") {
+  if (
+    props.selectedCategory !== "All" &&
+    props.selectedMobileCategory === "All"
+  ) {
     maxBudget = props.budgetDict[props.selectedCategory];
+  } else if (
+    props.selectedMobileCategory !== "All" &&
+    props.selectedCategory === "All"
+  ) {
+    maxBudget = props.budgetDict[props.selectedMobileCategory];
   } else {
-    maxBudget = props.maxBudget;
+    maxBudget = props.budgetDict["All"];
   }
 
   console.log(maxBudget);

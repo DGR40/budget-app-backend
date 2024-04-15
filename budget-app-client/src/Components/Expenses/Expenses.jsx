@@ -42,13 +42,17 @@ function Expenses({ props }) {
   const [expensesLoading, setExpensesLoading] = useState(false);
 
   const budgetDict = {
-    "Food and Drink": 500,
-    Shopping: 100,
-    Entertainment: 200,
-    Rent: 1000,
-    Subscriptions: 100,
-    Transportation: 50,
-    All: 1450,
+    "Food and Drink": aStore.user.foodAndDrink,
+    Shopping: aStore.user.shopping,
+    Entertainment: aStore.user.entertainment,
+    Rent: aStore.user.rent,
+    Other: aStore.user.misc,
+    All:
+      aStore.user.foodAndDrink +
+      aStore.user.shopping +
+      aStore.user.entertainment +
+      aStore.user.misc +
+      aStore.user.rent,
   };
 
   let filteredExpenses = [];
@@ -179,9 +183,8 @@ function Expenses({ props }) {
     "Food and Drink": 0,
     Shopping: 0,
     Entertainment: 0,
-    Subscriptions: 0,
     Rent: 0,
-    Transportation: 0,
+    Other: 0,
   };
 
   // get only active categories
@@ -227,12 +230,14 @@ function Expenses({ props }) {
             selectedCategory={filteredCategory}
             expenses={filteredExpenses}
             budgetDict={budgetDict}
+            yearMode={yearMode}
           />
           <Dashboard
             expenses={filteredExpensesOfCategory}
             selectedMonth={filteredMonth}
             selectedYear={filteredYear}
             selectedCategory={filteredCategory}
+            selectedMobileCategory={mobileCategoryFilter}
             selectedYearWithMonth={filteredYearWithMonth}
             maxBudget={budgetDict["All"]}
             budgetDict={budgetDict}

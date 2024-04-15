@@ -15,11 +15,11 @@
   font: inherit;
   padding: 1rem 2rem;
   border-radius: 8px;
-  background-color: rgb(255, 255, 255, 0.1);
+  background-color: rgb(59, 59, 59);
   color: white;
   margin-right: 1rem;
   cursor: pointer;
-  border: none;
+  border: 1px solid #a892ee;
 }
 
 @media only screen and (max-width: 768px) {
@@ -35,5 +35,5 @@
 }
 
 .filter-button:hover {
-  background-color: #3b3b3b;
+  filter: brightness(1.2);
 }

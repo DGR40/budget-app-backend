@@ -21,6 +21,7 @@
   justify-content: space-between;
   color: white;
   gap: 1rem;
+  transition: all 1s ease-in-out;
 }
 
 .new-expense-button {

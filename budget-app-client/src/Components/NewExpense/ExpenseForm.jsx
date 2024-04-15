@@ -35,6 +35,7 @@ function ExpenseForm({
 
   function onCancelExpenseHandler() {
     onClearExpense();
+    eStore.setIsEditing(false);
   }
 
   async function submitHandler(e) {
@@ -74,6 +75,7 @@ function ExpenseForm({
         await eStore.fetchExpenses();
         onSubmitEditExpense();
       }
+      eStore.setIsEditing(false);
     }
   }
 
