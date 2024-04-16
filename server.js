@@ -29,7 +29,7 @@ const app = express();
 // Serve static files
 app.use(express.static("./dist"));
 
-const indexPath = path.resolve(__dirname, "build", "index.html");
+const indexPath = path.resolve(__dirname, "./dist", "index.html");
 app.get("/", (req, res) => res.sendFile(indexPath));
 app.get("/settings", (req, res) => res.sendFile(indexPath));
 app.get("/login", (req, res) => res.sendFile(indexPath));
