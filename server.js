@@ -11,6 +11,7 @@ const xss = require("xss-clean");
 const expressRateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 const cors = require("cors");
+const path = require("path");
 
 // Load env vars
 dotenv.config({ path: "./config/config.env" });
@@ -25,7 +26,14 @@ const users = require("./routes/users");
 
 const app = express();
 
+// Serve static files
 app.use(express.static("./dist"));
+
+const indexPath = path.resolve(__dirname, "build", "index.html");
+app.get("/", (req, res) => res.sendFile(indexPath));
+app.get("/settings", (req, res) => res.sendFile(indexPath));
+app.get("/login", (req, res) => res.sendFile(indexPath));
+app.get("/signup", (req, res) => res.sendFile(indexPath));
 
 // Body parser
 app.use(express.json());
