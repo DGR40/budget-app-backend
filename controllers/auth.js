@@ -13,7 +13,7 @@ exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, password, role } = req.body;
 
   // if fields are filled out AND make sure no one can make admin
-  if (!name || !email || !password || password.length < 6 || role === "admin") {
+  if (!name || !email || !password || password.length < 6 || role !== "user") {
     return next(
       new ErrorResponse(
         "Please provide a username, email and password longer than 6 characters",
@@ -29,7 +29,7 @@ exports.register = asyncHandler(async (req, res, next) => {
       name,
       email,
       password,
-      role,
+      role: "user",
       firstLogIn: true,
       foodAndDrink: 200,
       shopping: 200,
