@@ -99,6 +99,8 @@
   font-weight: 700;
   width: 100%;
   margin-bottom: 4px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .budget-total {

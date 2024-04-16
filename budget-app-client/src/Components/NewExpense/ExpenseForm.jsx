@@ -183,8 +183,7 @@ function ExpenseForm({
             <option value="Shopping">Shopping</option>
             <option value="Entertainment">Entertainment</option>
             <option value="Rent">Rent</option>
-            <option value="Subscriptions">Subscriptions</option>
-            <option value="Transportation">Transportation</option>
+            <option value="Other">Other</option>
           </select>
           {!categoryValid && (
             <label className="error-text">Please select a category...</label>

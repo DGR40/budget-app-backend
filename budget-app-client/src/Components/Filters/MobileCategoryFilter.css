@@ -12,10 +12,14 @@
   display: none;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 @media (max-width: 800px) {
   .mobile-category-filter {
     display: flex;
   }
+}
+.dropdown-arrow {
+  color: white; /* Ensure the arrow doesn't interfere with click events */
 }

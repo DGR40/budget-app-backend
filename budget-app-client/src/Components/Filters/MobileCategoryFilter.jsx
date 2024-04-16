@@ -6,26 +6,31 @@ const MobileCategoryFilter = (props) => {
   }
 
   return (
-    <select
-      onChange={dropdownChangeHandler}
-      value={props.selectedMobileCategory}
-      className="mobile-category-filter"
-      disabled={props.activeCategories.length === 1}
-    >
-      {props.activeCategories.length !== 1 && (
-        <option value={"All"}>All Categories</option>
-      )}
+    <>
+      <select
+        onChange={dropdownChangeHandler}
+        value={props.selectedMobileCategory}
+        className="mobile-category-filter"
+        disabled={props.activeCategories.length === 1}
+      >
+        {props.activeCategories.length !== 1 && (
+          <option value={"All"}>All Categories</option>
+        )}
 
-      {props.activeCategories.map((c) => {
-        {
-          return (
-            <option value={c} key={c}>
-              {c}
-            </option>
-          );
-        }
-      })}
-    </select>
+        {props.activeCategories.map((c) => {
+          {
+            return (
+              <>
+                <option value={c} key={c}>
+                  {c}
+                </option>
+                <span className="dropdown-arrow">V</span>
+              </>
+            );
+          }
+        })}
+      </select>
+    </>
   );
 };
 

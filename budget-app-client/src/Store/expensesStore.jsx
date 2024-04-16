@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+import { parseISO } from "date-fns";
 
 const expensesStore = create((set) => ({
   expenses: null,
@@ -47,25 +48,40 @@ const expensesStore = create((set) => ({
   updateExpenseForm: (e) => {
     const { name, value } = e.target;
 
+    let cleanValue = "";
+
+    if (name === "date") {
+      cleanValue = parseISO(value);
+    } else {
+      cleanValue = value;
+    }
+
     set((state) => {
       return {
         createExpenseForm: {
           ...state.createExpenseForm,
-          [name]: value,
+          [name]: cleanValue,
         },
       };
     });
   },
 
   updateEditExpenseForm: (e) => {
-    const { editExpenseForm } = expensesStore.getState();
     const { name, value } = e.target;
+
+    let cleanValue = "";
+
+    if (name === "date") {
+      cleanValue = parseISO(value);
+    } else {
+      cleanValue = value;
+    }
 
     set((state) => {
       return {
         editExpenseForm: {
           ...state.editExpenseForm,
-          [name]: value,
+          [name]: cleanValue,
         },
       };
     });
