@@ -26,15 +26,6 @@ const users = require("./routes/users");
 
 const app = express();
 
-// Serve static files
-app.use(express.static("./dist"));
-
-const indexPath = "./dist/index.html";
-app.get("/", (req, res) => res.sendFile(indexPath));
-app.get("/settings", (req, res) => res.sendFile(indexPath));
-app.get("/login", (req, res) => res.sendFile(indexPath));
-app.get("/signup", (req, res) => res.sendFile(indexPath));
-
 // Body parser
 app.use(express.json());
 // Cookie parser
@@ -79,6 +70,12 @@ app.use("/api/v1/auth", auth);
 app.use("/api/v1/users", users);
 
 app.use(errorHandler);
+
+// Serve static files from "./dist" directory
+app.use(express.static("./dist"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./dist", "index.html"));
+});
 
 const PORT = process.env.PORT || 3000;
 
