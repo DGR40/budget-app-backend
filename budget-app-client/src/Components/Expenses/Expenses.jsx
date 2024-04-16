@@ -17,10 +17,14 @@ function Expenses({ props }) {
 
   useEffect(() => {
     // fetch expenses
-    aStore.checkAuth();
-    eStore.fetchExpenses();
+    getAuthAndExpenses();
     console.log("finished fetching expenses", eStore.expenses);
   }, []);
+
+  async function getAuthAndExpenses() {
+    await aStore.checkAuth();
+    await eStore.fetchExpenses();
+  }
 
   const [filteredYear, setFilteredYear] = useState(
     new Date().getFullYear().toString()
@@ -41,19 +45,28 @@ function Expenses({ props }) {
   const [expenses, setExpenses] = useState([]);
   const [expensesLoading, setExpensesLoading] = useState(false);
 
-  const budgetDict = {
-    "Food and Drink": aStore.user.foodAndDrink,
-    Shopping: aStore.user.shopping,
-    Entertainment: aStore.user.entertainment,
-    Rent: aStore.user.rent,
-    Other: aStore.user.misc,
-    All:
-      aStore.user.foodAndDrink +
-      aStore.user.shopping +
-      aStore.user.entertainment +
-      aStore.user.misc +
-      aStore.user.rent,
-  };
+  const budgetDict = aStore.user
+    ? {
+        "Food and Drink": aStore.user.foodAndDrink,
+        Shopping: aStore.user.shopping,
+        Entertainment: aStore.user.entertainment,
+        Rent: aStore.user.rent,
+        Other: aStore.user.misc,
+        All:
+          aStore.user.foodAndDrink +
+          aStore.user.shopping +
+          aStore.user.entertainment +
+          aStore.user.misc +
+          aStore.user.rent,
+      }
+    : {
+        "Food and Drink": 0,
+        Shopping: 0,
+        Entertainment: 0,
+        Rent: 0,
+        Other: 0,
+        All: 0,
+      };
 
   let filteredExpenses = [];
   let filteredExpensesOfCategory = [];
@@ -205,7 +218,10 @@ function Expenses({ props }) {
   return (
     <Card className="expenses">
       <h2 className="username-text">
-        Hello, <span className="bold light-purple">{aStore.user.name}</span>
+        Hello,{" "}
+        <span className="bold light-purple">
+          {aStore.user ? aStore.user.name : ""}
+        </span>
       </h2>
       <NewExpense onAddExpense={addExpenseHandler} mode="add"></NewExpense>
       <Filters

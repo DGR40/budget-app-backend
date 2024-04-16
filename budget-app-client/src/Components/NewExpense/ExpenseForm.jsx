@@ -21,7 +21,7 @@ function ExpenseForm({
   const [categoryValid, setCategoryValid] = useState(true);
 
   const isNotEmpty = (value) => value.trim() !== "";
-  const isTooLong = (value) => value.length >= 30;
+  const isTooLong = (value) => value.length > 30;
 
   const eStore = expensesStore();
 
@@ -120,7 +120,7 @@ function ExpenseForm({
             className={`settings__input ${!titleValid && "invalid-setting"}`}
           />
           {!titleValid && (
-            <label className="error-text">Please enter a title...</label>
+            <label className="error-text">Please enter a valid title...</label>
           )}
         </div>
         <div className="settings__control">

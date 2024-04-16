@@ -27,6 +27,12 @@ function SettingsForm({}) {
 
   const eStore = expensesStore();
   const aStore = authStore();
+
+  async function logoutHandler() {
+    await aStore.logout();
+    navigate("/login");
+  }
+
   const {
     name,
     foodAndDrink,
@@ -172,7 +178,9 @@ function SettingsForm({}) {
         </button>
       </div>
       <hr />
-      <button className="settings-button red">Logout</button>
+      <button className="settings-button red" onClick={logoutHandler}>
+        Logout
+      </button>
     </form>
   );
 }

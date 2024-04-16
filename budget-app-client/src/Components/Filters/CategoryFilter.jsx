@@ -45,25 +45,41 @@ function CategoryFilter(props) {
 
   console.log("category totals", chartCategoryData);
 
-  const budgetData = {
-    "Food and Drink":
-      chartCategoryData["Food and Drink"] / aStore.user.foodAndDrink,
-    Shopping: chartCategoryData["Shopping"] / aStore.user.shopping,
-    Entertainment:
-      chartCategoryData["Entertainment"] / aStore.user.entertainment,
-    Rent: chartCategoryData["Rent"] / aStore.user.rent,
-    Other: chartCategoryData["Other"] / aStore.user.misc,
-  };
+  const budgetData = aStore.user
+    ? {
+        "Food and Drink":
+          chartCategoryData["Food and Drink"] / aStore.user.foodAndDrink,
+        Shopping: chartCategoryData["Shopping"] / aStore.user.shopping,
+        Entertainment:
+          chartCategoryData["Entertainment"] / aStore.user.entertainment,
+        Rent: chartCategoryData["Rent"] / aStore.user.rent,
+        Other: chartCategoryData["Other"] / aStore.user.misc,
+      }
+    : {
+        "Food and Drink": 0,
+        Shopping: 0,
+        Entertainment: 0,
+        Rent: 0,
+        Other: 0,
+      };
 
-  const budgetDataYearly = {
-    "Food and Drink":
-      chartCategoryData["Food and Drink"] / (aStore.user.foodAndDrink * 12),
-    Shopping: chartCategoryData["Shopping"] / (aStore.user.shopping * 12),
-    Entertainment:
-      chartCategoryData["Entertainment"] / (aStore.user.entertainment * 12),
-    Rent: chartCategoryData["Rent"] / (aStore.user.rent * 12),
-    Other: chartCategoryData["Other"] / (aStore.user.misc * 12),
-  };
+  const budgetDataYearly = aStore.user
+    ? {
+        "Food and Drink":
+          chartCategoryData["Food and Drink"] / (aStore.user.foodAndDrink * 12),
+        Shopping: chartCategoryData["Shopping"] / (aStore.user.shopping * 12),
+        Entertainment:
+          chartCategoryData["Entertainment"] / (aStore.user.entertainment * 12),
+        Rent: chartCategoryData["Rent"] / (aStore.user.rent * 12),
+        Other: chartCategoryData["Other"] / (aStore.user.misc * 12),
+      }
+    : {
+        "Food and Drink": 0,
+        Shopping: 0,
+        Entertainment: 0,
+        Rent: 0,
+        Other: 0,
+      };
 
   console.log(budgetData, "props selected", budgetDataYearly);
 

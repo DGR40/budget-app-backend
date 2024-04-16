@@ -6,6 +6,7 @@
   margin: 1rem 0;
   background-color: rgb(255, 255, 255, 0.1);
   border-radius: 12px;
+  min-width: 0;
 }
 
 .expense-item__description {
@@ -38,7 +39,7 @@
   margin: 0;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 700px) {
   .expense-item__description {
     flex-direction: row;
     align-items: center;
