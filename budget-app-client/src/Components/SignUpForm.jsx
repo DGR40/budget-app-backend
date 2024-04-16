@@ -56,7 +56,6 @@ function SignUpForm() {
     const res = await store.signup(e);
 
     if (!store.loggedIn) {
-      console.log("frontend error: ", store.signupError);
       setErrorMessage(store.signupError);
     } else {
       goToExpenses();

@@ -146,8 +146,6 @@ const expensesStore = create((set) => ({
         expenses: [...expenses, res.data.data],
       });
 
-      console.log(expenses);
-
       // clear form
       set({
         createExpenseForm: {

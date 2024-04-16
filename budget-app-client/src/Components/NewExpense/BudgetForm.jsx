@@ -34,7 +34,6 @@ function BudgetForm({
     let formValid = true;
 
     if (!form.title) {
-      console.log("title blank!");
       setTitleValid(false);
       formValid = false;
     } else {
@@ -68,7 +67,6 @@ function BudgetForm({
   }
 
   function getDateForDatePicker(full) {
-    console.log("get full year", full);
     let dateObj = {};
     if (mode === "edit") {
       dateObj = new Date(full);

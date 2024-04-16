@@ -8,7 +8,6 @@ function SignUpPage() {
   const store = authStore();
   useEffect(() => {
     store.checkAuth();
-    console.log(store.isLoggedIn);
   }, []);
 
   if (store.loggedIn) {

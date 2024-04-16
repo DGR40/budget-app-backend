@@ -42,10 +42,7 @@ function ExpenseForm({
     e.preventDefault();
     let formValid = true;
 
-    console.log("FC: ", form.category);
-
     if (!form.title || isTooLong(form.title)) {
-      console.log("title blank!");
       setTitleValid(false);
       formValid = false;
     } else {
@@ -80,7 +77,6 @@ function ExpenseForm({
   }
 
   function getDateForDatePicker(full) {
-    console.log("get full year", full);
     let dateObj = {};
     if (mode === "edit") {
       dateObj = new Date(full);

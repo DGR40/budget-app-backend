@@ -18,7 +18,6 @@ function Expenses({ props }) {
   useEffect(() => {
     // fetch expenses
     getAuthAndExpenses();
-    console.log("finished fetching expenses", eStore.expenses);
   }, []);
 
   async function getAuthAndExpenses() {
@@ -102,7 +101,6 @@ function Expenses({ props }) {
 
   function filterChangeHandler(selectedYear) {
     setFilteredYear(selectedYear);
-    console.log("Year mode!", selectedYear.value);
     setFilteredCategory("All");
     setSearchTerm("");
   }
@@ -124,7 +122,6 @@ function Expenses({ props }) {
     if (category === filteredCategory) {
       setFilteredCategory("All");
     } else {
-      console.log("changing categories to ", category);
       setFilteredCategory(category);
     }
     setSearchTerm("");
@@ -147,8 +144,6 @@ function Expenses({ props }) {
           new Date(expense.date).getFullYear().toString() === filteredYear
       );
     }
-
-    console.log("after the year filter", filteredExpenses);
 
     filteredExpensesOfCategory = filteredExpenses;
     // if category filter applied

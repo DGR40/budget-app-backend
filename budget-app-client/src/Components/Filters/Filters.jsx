@@ -3,7 +3,6 @@ import MonthlyExpenseFilter from "./MonthlyExpenseFilter";
 import ExpenseFilter from "./ExpenseFilter";
 
 const Filters = (props) => {
-  console.log(props.selectedYear);
   return (
     <div className="filter">
       <div className="time-filter-section">

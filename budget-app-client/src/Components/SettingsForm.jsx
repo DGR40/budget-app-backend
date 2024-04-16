@@ -43,8 +43,6 @@ function SettingsForm({}) {
     misc,
   } = authStore().userForm;
 
-  console.log("user", aStore.user);
-
   let USDollar = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -60,7 +58,6 @@ function SettingsForm({}) {
 
   // init form values
   useEffect(() => {
-    console.log("initializing user form", aStore.user);
     aStore.initUpdateUserForm(aStore.user);
   }, []);
 
@@ -69,7 +66,6 @@ function SettingsForm({}) {
     let formValid = true;
 
     if (!name || isTooLong(name)) {
-      console.log("title blank!");
       setUsernameValid(false);
       formValid = false;
     } else {

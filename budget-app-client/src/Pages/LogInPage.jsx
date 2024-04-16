@@ -9,7 +9,6 @@ function LogInPage() {
 
   useEffect(() => {
     store.checkAuth();
-    console.log(store.isLoggedIn);
   }, []);
 
   if (store.loggedIn) {

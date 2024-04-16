@@ -43,7 +43,6 @@ function LoginForm() {
     e.preventDefault();
     await store.login();
     if (!store.loggedIn) {
-      console.log("fe not logged in");
       setErrorMessage("Invalid email or password");
     } else {
       navigate("/");

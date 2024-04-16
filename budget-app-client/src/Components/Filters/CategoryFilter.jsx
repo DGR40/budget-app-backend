@@ -43,8 +43,6 @@ function CategoryFilter(props) {
     chartCategoryData[expenseCategory] += expense.amount;
   }
 
-  console.log("category totals", chartCategoryData);
-
   const budgetData = aStore.user
     ? {
         "Food and Drink":
@@ -81,10 +79,7 @@ function CategoryFilter(props) {
         Other: 0,
       };
 
-  console.log(budgetData, "props selected", budgetDataYearly);
-
   function getPercent(c) {
-    console.log("YEAR MODE", props.yearMode);
     if (props.yearMode) {
       return budgetDataYearly[c] >= 1
         ? 100

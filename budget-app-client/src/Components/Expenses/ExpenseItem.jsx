@@ -41,7 +41,6 @@ function ExpenseItem({ eid, date, title, amount, category, expense }) {
               mode="edit"
               eid={eid}
               onSubmitEditExpense={() => {
-                console.log("running on submit edited expense ");
                 eStore.fetchExpenses();
                 eStore.setIsEditing(false);
                 setShowEdit(false);

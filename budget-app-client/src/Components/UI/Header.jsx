@@ -8,7 +8,6 @@ const Header = (props) => {
   const navigate = useNavigate();
 
   let location = useLocation();
-  console.log(location.pathname);
 
   async function logoutHandler() {
     await store.logout();

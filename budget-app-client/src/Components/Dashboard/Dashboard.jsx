@@ -2,8 +2,6 @@ import Card from "../UI/Card";
 import "./Dashboard.css";
 
 const Dashboard = (props) => {
-  console.log("dashboard fed this category:", props.selectedCategory);
-
   let maxBudget = 0;
 
   if (
@@ -19,8 +17,6 @@ const Dashboard = (props) => {
   } else {
     maxBudget = props.budgetDict["All"];
   }
-
-  console.log(maxBudget);
 
   let USDollar = new Intl.NumberFormat("en-US", {
     style: "currency",

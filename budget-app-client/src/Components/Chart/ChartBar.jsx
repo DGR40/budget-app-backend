@@ -12,8 +12,6 @@ const ChartBar = (props) => {
 
   let color = barFillHeight > 100 ? "red" : "purple";
 
-  console.log(props.selectedCategory);
-
   const innerBarRef = useRef();
 
   const innerBarHeight = innerBarRef.current.offsetY;

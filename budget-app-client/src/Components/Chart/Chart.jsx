@@ -2,13 +2,9 @@ import ChartBar from "./ChartBar";
 import "./Chart.css";
 
 const Chart = (props) => {
-  console.log(props.dataPoints);
-
   let totalAmount = 0;
 
   props.dataPoints.forEach((point) => (totalAmount += point.value));
-
-  console.log(props.selectedCategory);
 
   return (
     <div className="chart">

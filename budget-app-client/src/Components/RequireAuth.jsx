@@ -16,10 +16,7 @@ export default function RequireAuth({ children }) {
     return <div>Loading</div>;
   }
 
-  console.log("CURRENT loggedIn state", store.loggedIn);
-
   if (!store.loggedIn) {
-    console.log("store.loggedIn is false");
     return <Navigate to="/login" />;
   }
 

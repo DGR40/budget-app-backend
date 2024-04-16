@@ -67,15 +67,11 @@ const authStore = create((set) => ({
         misc: user.misc,
       },
     });
-
-    console.log(userForm);
   },
 
   updateUserForm: (e) => {
     const { userForm } = authStore.getState();
     const { name, value } = e.target;
-
-    console.log(name, value);
 
     set((state) => {
       return {
@@ -85,8 +81,6 @@ const authStore = create((set) => ({
         },
       };
     });
-
-    console.log(userForm);
   },
 
   updateUser: async (e) => {
@@ -115,12 +109,9 @@ const authStore = create((set) => ({
       set({ loggedIn: true });
       set({ token: res.data.token });
       set({ activePage: "expenses" });
-
-      console.log("logged in user", res.data.name);
     } catch (err) {
       set({ loggedIn: false });
       set({ loginError: err.response.data.error });
-      console.log("failed to log in");
     }
   },
 
@@ -143,7 +134,6 @@ const authStore = create((set) => ({
       const res = await axios.post("api/v1/auth/register", signupForm, {
         withCredentials: true,
       });
-      console.log("signed up new user", res.data.name);
       set({ signupError: "" });
       set({ loggedIn: true });
     } catch (err) {
@@ -156,14 +146,11 @@ const authStore = create((set) => ({
   checkAuth: async (e) => {
     const { user } = authStore.getState();
     try {
-      console.log("trying to auth");
       const res = await axios.get("api/v1/auth/me", {
         withCredentials: true,
       });
       set({ loggedIn: true, user: { ...res.data.data } });
-      console.log("current user", user);
     } catch (err) {
-      console.log("could not find user");
       set({ loggedIn: false });
     }
   },

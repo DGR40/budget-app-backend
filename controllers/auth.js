@@ -23,7 +23,6 @@ exports.register = asyncHandler(async (req, res, next) => {
   }
 
   // Create user
-
   try {
     const user = await User.create({
       name,

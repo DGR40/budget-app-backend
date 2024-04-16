@@ -3,7 +3,6 @@ import ExpenseItem from "./ExpenseItem";
 
 function ExpensesList(props) {
   function searchHandler(event) {
-    console.log("search!", event.target.value);
     //call up
     props.onSearch(event.target.value);
   }
