@@ -6,6 +6,6 @@
 - Expense filtering/searching/sorting
 ## Other Features:
 - RESTful API
-- Custom Server Side Rendering (serve static build of frontend via Node app)
+- Client Side Rendering (serve static build of frontend via Node app)
 - JWT Authentication
 - Password Encryption with BCrypt
